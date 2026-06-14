@@ -1,0 +1,363 @@
+@layer payload {
+  :root {
+    --theme-success-500: #006b3f;
+  }
+
+  .hmi-admin-dashboard {
+    margin-bottom: 2rem;
+  }
+
+  .hmi-admin-hero {
+    align-items: flex-start;
+    background:
+      linear-gradient(135deg, rgba(0, 107, 63, 0.96), rgba(0, 51, 36, 0.98)),
+      radial-gradient(circle at top right, rgba(214, 168, 79, 0.3), transparent 34rem);
+    border-radius: 18px;
+    color: #fff;
+    display: flex;
+    gap: 1.5rem;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  .hmi-admin-hero h1 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1;
+    margin: 0.5rem 0 0;
+  }
+
+  .hmi-admin-hero p:not(.hmi-admin-eyebrow) {
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+    margin: 1rem 0 0;
+    max-width: 46rem;
+  }
+
+  .hmi-admin-eyebrow {
+    color: #d6a84f;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .hmi-admin-hero-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .hmi-admin-hero-actions a,
+  .hmi-admin-row-actions a {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 0.85rem;
+    font-weight: 800;
+    justify-content: center;
+    text-decoration: none;
+  }
+
+  .hmi-admin-hero-actions a {
+    background: #d6a84f;
+    color: #10231c;
+    padding: 0.75rem 1rem;
+  }
+
+  .hmi-admin-hero-actions a + a {
+    background: rgba(255, 255, 255, 0.13);
+    color: #fff;
+  }
+
+  .hmi-admin-modules {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hmi-admin-card,
+  .hmi-admin-guide {
+    background: var(--theme-elevation-50);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 16px;
+    padding: 1.25rem;
+  }
+
+  .hmi-admin-card h2,
+  .hmi-admin-guide h2 {
+    font-size: 1.15rem;
+    line-height: 1.45;
+    margin: 0.4rem 0 0;
+  }
+
+  .hmi-admin-links {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .hmi-admin-link-row {
+    align-items: center;
+    background: var(--theme-elevation-0);
+    border: 1px solid var(--theme-elevation-100);
+    border-radius: 12px;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 0.85rem;
+  }
+
+  .hmi-admin-link-row strong {
+    display: block;
+  }
+
+  .hmi-admin-link-row span {
+    color: var(--theme-elevation-600);
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 0.2rem;
+  }
+
+  .hmi-admin-row-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+
+  .hmi-admin-row-actions a {
+    background: rgba(0, 107, 63, 0.1);
+    color: #006b3f;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .hmi-admin-row-actions a + a {
+    background: #006b3f;
+    color: #fff;
+  }
+
+  .hmi-admin-guide {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 0.7fr 1fr;
+    margin-top: 1rem;
+  }
+
+  .hmi-admin-guide ul {
+    display: grid;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hmi-admin-guide li {
+    background: var(--theme-elevation-0);
+    border: 1px solid var(--theme-elevation-100);
+    border-radius: 10px;
+    padding: 0.75rem;
+  }
+
+  .hmi-control-center {
+    padding: 2rem;
+  }
+
+  .hmi-control-hero {
+    align-items: stretch;
+    background:
+      linear-gradient(135deg, rgba(0, 107, 63, 0.96), rgba(0, 51, 36, 0.98)),
+      radial-gradient(circle at top right, rgba(214, 168, 79, 0.35), transparent 34rem);
+    border-radius: 18px;
+    color: #fff;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 220px;
+    margin-bottom: 1.25rem;
+    padding: 2rem;
+  }
+
+  .hmi-control-hero h1 {
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1;
+    margin: 0.5rem 0 0;
+  }
+
+  .hmi-control-hero p:not(.hmi-admin-eyebrow) {
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.7;
+    margin: 1rem 0 0;
+    max-width: 50rem;
+  }
+
+  .hmi-control-stats {
+    align-content: center;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 16px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.35rem 0.75rem;
+    padding: 1.25rem;
+  }
+
+  .hmi-control-stats strong {
+    color: #d6a84f;
+    font-size: 2.2rem;
+    line-height: 1;
+  }
+
+  .hmi-control-stats span {
+    align-self: center;
+    color: rgba(255, 255, 255, 0.78);
+    font-weight: 800;
+  }
+
+  .hmi-control-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .hmi-control-module {
+    background: var(--theme-elevation-50);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 16px;
+    padding: 1.25rem;
+  }
+
+  .hmi-control-module-head {
+    align-items: start;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .hmi-control-module-head h2 {
+    font-size: 1.15rem;
+    line-height: 1.45;
+    margin: 0.4rem 0 0;
+  }
+
+  .hmi-control-module-head > span {
+    background: rgba(0, 107, 63, 0.1);
+    border-radius: 999px;
+    color: #006b3f;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 800;
+    padding: 0.45rem 0.75rem;
+  }
+
+  .hmi-control-table {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .hmi-control-row {
+    align-items: center;
+    background: var(--theme-elevation-0);
+    border: 1px solid var(--theme-elevation-100);
+    border-radius: 12px;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr auto;
+    padding: 0.9rem;
+  }
+
+  .hmi-control-row strong {
+    display: block;
+  }
+
+  .hmi-control-row p,
+  .hmi-control-row small {
+    color: var(--theme-elevation-600);
+    display: block;
+    margin: 0.2rem 0 0;
+  }
+
+  .hmi-control-row small {
+    font-weight: 700;
+  }
+
+  .hmi-control-two-col {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+  }
+
+  .hmi-control-workflows,
+  .hmi-control-role-list {
+    display: grid;
+    gap: 0.65rem;
+    margin-top: 1rem;
+  }
+
+  .hmi-control-workflows div,
+  .hmi-control-role-list li {
+    background: var(--theme-elevation-0);
+    border: 1px solid var(--theme-elevation-100);
+    border-radius: 10px;
+    padding: 0.75rem;
+  }
+
+  .hmi-control-workflows strong,
+  .hmi-control-workflows span {
+    display: block;
+  }
+
+  .hmi-control-workflows span {
+    color: var(--theme-elevation-600);
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+  }
+
+  .hmi-control-role-list {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  @media (max-width: 900px) {
+    .hmi-admin-hero,
+    .hmi-admin-guide,
+    .hmi-control-hero {
+      display: block;
+    }
+
+    .hmi-admin-hero-actions {
+      margin-top: 1.25rem;
+    }
+
+    .hmi-admin-modules {
+      grid-template-columns: 1fr;
+    }
+
+    .hmi-admin-link-row {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .hmi-control-center {
+      padding: 1rem;
+    }
+
+    .hmi-control-module-head,
+    .hmi-control-row {
+      display: block;
+    }
+
+    .hmi-control-module-head > span,
+    .hmi-admin-row-actions {
+      margin-top: 0.75rem;
+    }
+
+    .hmi-control-two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+}
