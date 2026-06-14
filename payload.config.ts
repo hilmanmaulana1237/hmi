@@ -17,6 +17,11 @@ const databaseConnectionTimeoutMs = Number.isFinite(
 )
   ? parsedDatabaseConnectionTimeout
   : 5000;
+const parsedDatabasePoolMax = Number(process.env.DATABASE_POOL_MAX);
+const databasePoolMax =
+  Number.isFinite(parsedDatabasePoolMax) && parsedDatabasePoolMax > 0
+    ? parsedDatabasePoolMax
+    : 1;
 
 export default buildConfig({
   admin: {
@@ -52,6 +57,7 @@ export default buildConfig({
         process.env.DATABASE_URL ??
         "postgresql://postgres:postgres@localhost:5432/hmi",
       connectionTimeoutMillis: databaseConnectionTimeoutMs,
+      max: databasePoolMax,
       ssl: process.env.DATABASE_URL?.includes("supabase")
         ? { rejectUnauthorized: false }
         : undefined,
