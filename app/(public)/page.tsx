@@ -55,7 +55,7 @@ export default async function Home() {
     "/background.jpeg"
   );
   const primaryCtaLabel = (hp?.primaryCtaLabel as string) || "Daftar LK-I";
-  const primaryCtaHref = (hp?.primaryCtaHref as string) || "/kaderisasi/daftar-lk-1";
+  const primaryCtaHref = (hp?.primaryCtaHref as string) || "https://pendaftaran-lk1-saintek.vercel.app/";
   const secondaryCtaLabel = (hp?.secondaryCtaLabel as string) || "Lihat Profil Komisariat";
   const secondaryCtaHref = (hp?.secondaryCtaHref as string) || "/profil";
 
@@ -162,6 +162,8 @@ export default async function Home() {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
                   href={primaryCtaHref}
+                  target={primaryCtaHref.startsWith("http") ? "_blank" : undefined}
+                  rel={primaryCtaHref.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="inline-flex items-center justify-center gap-3 rounded-full bg-gradient-to-r from-[#F2994A] to-[#F2C94C] px-7 py-3 text-base font-black text-white shadow-[0_15px_35px_rgba(242,153,74,0.32)] transition hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(242,153,74,0.5)]"
                 >
                   {primaryCtaLabel}
@@ -288,7 +290,9 @@ export default async function Home() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/kaderisasi/daftar-lk-1"
+                  href="https://pendaftaran-lk1-saintek.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D6A84F] px-6 py-3 text-sm font-bold text-[#10231C]"
                 >
                   Mulai daftar

@@ -20,7 +20,7 @@ const information = [
   { label: "Pengumuman", href: "/informasi/pengumuman" },
   { label: "Layanan PTKP", href: "/layanan/advokasi" },
   { label: "Pusat Dokumen", href: "/layanan/pusat-dokumen" },
-  { label: "Daftar LK-I", href: "/kaderisasi/daftar-lk-1" },
+  { label: "Daftar LK-I", href: "https://pendaftaran-lk1-saintek.vercel.app/" },
 ];
 
 type SiteSettingsData = Record<string, unknown> | null;
@@ -149,17 +149,22 @@ function FooterColumn({
     <div>
       <FooterTitle>{title}</FooterTitle>
       <ul className="mt-6 grid gap-3 text-sm text-white/72">
-        {links.map((item) => (
-          <li key={item.href}>
-            <Link
-              href={item.href}
-              className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#F2994A]" />
-              {item.label}
-            </Link>
-          </li>
-        ))}
+        {links.map((item) => {
+          const isExternal = item.href.startsWith("http");
+          return (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="inline-flex items-center gap-2 transition hover:translate-x-1 hover:text-white"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F2994A]" />
+                {item.label}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

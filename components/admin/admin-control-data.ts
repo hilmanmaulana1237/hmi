@@ -85,7 +85,7 @@ export const cmsModules = [
         label: "Pendaftaran LK-I",
         slug: "lk1-registrations",
         action: "Verifikasi peserta, status LK-I, pembayaran, screening",
-        publicPath: "/kaderisasi/daftar-lk-1",
+        publicPath: "https://pendaftaran-lk1-saintek.vercel.app/",
       },
       {
         label: "Struktur Pengurus",

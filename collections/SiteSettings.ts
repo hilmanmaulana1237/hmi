@@ -43,7 +43,7 @@ export const SiteSettings: CollectionConfig = {
         { name: "heroSubtitle", type: "textarea" },
         { name: "heroImage", type: "upload", relationTo: "media" },
         { name: "primaryCtaLabel", type: "text", defaultValue: "Daftar LK-I" },
-        { name: "primaryCtaHref", type: "text", defaultValue: "/kaderisasi/daftar-lk-1" },
+        { name: "primaryCtaHref", type: "text", defaultValue: "https://pendaftaran-lk1-saintek.vercel.app/" },
         { name: "secondaryCtaLabel", type: "text", defaultValue: "Lihat Profil" },
         { name: "secondaryCtaHref", type: "text", defaultValue: "/profil" },
         { name: "totalCadres", type: "number" },

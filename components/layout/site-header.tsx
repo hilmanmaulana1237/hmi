@@ -47,7 +47,7 @@ const infoLinks = [
 
 const cadreLinks = [
   { label: "Informasi LK-I", href: "/kaderisasi/lk-1", icon: BookOpenText },
-  { label: "Daftar LK-I", href: "/kaderisasi/daftar-lk-1", icon: IdCard },
+  { label: "Daftar LK-I", href: "https://pendaftaran-lk1-saintek.vercel.app/", icon: IdCard },
   { label: "Status Pendaftaran", href: "/kaderisasi/status-pendaftaran", icon: ShieldCheck },
   { label: "Materi Kaderisasi", href: "/kaderisasi/materi", icon: FileArchive },
 ];
@@ -129,7 +129,7 @@ export function SiteHeader({ settings }: { settings?: SiteSettingsData }) {
             <Dropdown label="Kaderisasi" icon={IdCard} links={cadreLinks} />
             <Dropdown label="Layanan" icon={FileArchive} links={serviceLinks} />
             <NavLink
-              href="/kaderisasi/daftar-lk-1"
+              href="https://pendaftaran-lk1-saintek.vercel.app/"
               icon={IdCard}
               label="Daftar LK-I"
               variant="accent"
@@ -153,7 +153,7 @@ export function SiteHeader({ settings }: { settings?: SiteSettingsData }) {
           <button
             type="button"
             className="grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white xl:hidden"
-            onClick={() => setOpen((value) => !value)}
+            onClick={() => setOpen((value: boolean) => !value)}
             aria-expanded={open}
             aria-label={open ? "Tutup menu" : "Buka menu"}
           >
@@ -182,7 +182,7 @@ export function SiteHeader({ settings }: { settings?: SiteSettingsData }) {
         <MobileLink href="/galeri" icon={GalleryHorizontal} label="Galeri" onClick={() => setOpen(false)} />
         <MobileGroup label="Kaderisasi" links={cadreLinks} onNavigate={() => setOpen(false)} />
         <MobileGroup label="Layanan" links={serviceLinks} onNavigate={() => setOpen(false)} />
-        <MobileLink href="/kaderisasi/daftar-lk-1" icon={IdCard} label="Daftar LK-I" onClick={() => setOpen(false)} accent />
+        <MobileLink href="https://pendaftaran-lk1-saintek.vercel.app/" icon={IdCard} label="Daftar LK-I" onClick={() => setOpen(false)} accent />
         <Link
           href="/admin"
           onClick={() => setOpen(false)}
@@ -209,6 +209,7 @@ function NavLink({
   icon: IconType;
   variant?: "soft" | "accent";
 }) {
+  const isExternal = href.startsWith("http");
   const className =
     variant === "accent"
       ? "bg-[#F2994A] text-[#003324] font-black hover:bg-white"
@@ -219,6 +220,8 @@ function NavLink({
   return (
     <Link
       href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className={`inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-sm font-semibold transition ${className}`}
     >
       <Icon className="h-4 w-4" />
@@ -248,16 +251,21 @@ function Dropdown({
       </button>
       <div className="invisible absolute left-1/2 top-[calc(100%-2px)] w-72 -translate-x-1/2 pt-3 opacity-0 transition group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
         <div className="translate-y-1 rounded-[1.35rem] bg-white p-3 shadow-[0_20px_40px_rgba(0,0,0,0.15)] transition group-hover:translate-y-0 group-focus-within:translate-y-0">
-          {links.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-[#1E293B] transition hover:bg-[#F0F7F4] hover:pl-5 hover:text-[#006144]"
-            >
-              <item.icon className="h-4 w-4 text-[#006144]" />
-              {item.label}
-            </Link>
-          ))}
+          {links.map((item) => {
+            const isExternal = item.href.startsWith("http");
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-[#1E293B] transition hover:bg-[#F0F7F4] hover:pl-5 hover:text-[#006144]"
+              >
+                <item.icon className="h-4 w-4 text-[#006144]" />
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -280,17 +288,22 @@ function MobileGroup({
         <ChevronDown className="h-4 w-4 transition group-open:rotate-180" />
       </summary>
       <div className="ml-4 mt-2 grid gap-2 border-l-2 border-[#008F62] pl-3">
-        {links.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            onClick={onNavigate}
-            className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white px-4 py-3 text-sm font-semibold text-slate-700"
-          >
-            <item.icon className="h-4 w-4 text-[#006144]" />
-            {item.label}
-          </Link>
-        ))}
+        {links.map((item) => {
+          const isExternal = item.href.startsWith("http");
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={onNavigate}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              className="flex items-center gap-3 rounded-xl border border-slate-100 bg-white px-4 py-3 text-sm font-semibold text-slate-700"
+            >
+              <item.icon className="h-4 w-4 text-[#006144]" />
+              {item.label}
+            </Link>
+          );
+        })}
       </div>
     </details>
   );
@@ -309,10 +322,13 @@ function MobileLink({
   onClick: () => void;
   accent?: boolean;
 }) {
+  const isExternal = href.startsWith("http");
   return (
     <Link
       href={href}
       onClick={onClick}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className={`mb-2 flex items-center justify-between rounded-2xl px-4 py-4 text-sm font-black ${
         accent ? "bg-[#F2994A] text-[#003324]" : "bg-slate-50 text-[#003324]"
       }`}
