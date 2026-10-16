@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { authenticated, superAdmins } from "./access";
+import { adminsAndChair, anyone, superAdmins } from "./access";
 
 export const SiteSettings: CollectionConfig = {
   slug: "site-settings",
@@ -10,13 +10,64 @@ export const SiteSettings: CollectionConfig = {
   },
   access: {
     create: superAdmins,
-    read: authenticated,
-    update: superAdmins,
+    read: anyone,
+    update: adminsAndChair,
     delete: superAdmins,
   },
   fields: [
     { name: "siteName", type: "text", required: true },
     { name: "siteDescription", type: "textarea" },
+    {
+      name: "visionMision",
+      type: "group",
+      label: "Visi, Misi & Landasan Gerak",
+      fields: [
+        {
+          name: "vision",
+          type: "textarea",
+          label: "Visi Utama Organisasi",
+          admin: {
+            description: "Pernyataan visi utama HMI Komisariat Sains & Teknologi",
+          },
+        },
+        {
+          name: "visionDescription",
+          type: "textarea",
+          label: "Penjelasan / Catatan Visi",
+          admin: {
+            description: "Catatan penjelas visi yang tampil di bawah teks visi",
+          },
+        },
+        {
+          name: "arahGerakQuote",
+          type: "textarea",
+          label: "Kutipan Arah Gerak",
+        },
+        {
+          name: "arahGerakDescription",
+          type: "textarea",
+          label: "Deskripsi Arah Gerak",
+        },
+        {
+          name: "tujuanHmi",
+          type: "textarea",
+          label: "Tujuan HMI (Pasal 4 AD HMI)",
+        },
+        {
+          name: "missions",
+          type: "array",
+          label: "Daftar Misi Strategis",
+          labels: {
+            singular: "Misi",
+            plural: "Daftar Misi",
+          },
+          fields: [
+            { name: "title", type: "text", label: "Judul Misi", required: true },
+            { name: "description", type: "textarea", label: "Penjelasan Misi", required: true },
+          ],
+        },
+      ],
+    },
     { name: "logo", type: "upload", relationTo: "media" },
     { name: "smallLogo", type: "upload", relationTo: "media" },
     { name: "activePeriod", type: "text" },

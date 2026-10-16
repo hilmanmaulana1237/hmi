@@ -563,64 +563,352 @@ export type StructureMember = {
   department: string;
   period: string;
   description: string;
+  photo?: string;
+  instagram?: string;
+  roleType?: "ketum" | "sekum" | "bendum" | "kabid" | "wasekum" | "departemen" | "biro";
+  bidangKey?: "bph" | "pppa" | "ptkp" | "kpp" | "kohati" | "biro";
+  order?: number;
 };
+
+export type FunctionalDivision = {
+  key: "pppa" | "ptkp" | "kpp" | "kohati";
+  code: string;
+  name: string;
+  shortDesc: string;
+  fullDesc: string;
+  dasarPedoman: string;
+  tupoksi: string[];
+  programUnggulan: string[];
+  kabid: string;
+  wasekum: string;
+  departemen: { name: string; focus: string }[];
+  accentColor: string;
+  badgeBg: string;
+  badgeText: string;
+  borderColor: string;
+};
+
+export const hmiFunctionalDivisions: FunctionalDivision[] = [
+  {
+    key: "pppa",
+    code: "PPPA",
+    name: "Bidang Penelitian, Pengembangan, dan Pembinaan Anggota",
+    shortDesc:
+      "Bertugas mengelola rekrutmen kader (seperti LK-1/Basic Training), pembinaan, pengawasan aktivitas anggota, serta tindak lanjut hasil training.",
+    fullDesc:
+      "Jantung perkaderan HMI yang bertanggung jawab mengawal seluruh siklus pembinaan kader, mulai dari rekrutmen mahasiswa baru, pelaksanaan Basic Training (LK-1), mentoring Nilai Dasar Perjuangan (NDP), hingga pemetaan riset potensi keilmuan kader saintek.",
+    dasarPedoman: "Pedoman Perkaderan HMI & Pedoman Kepengurusan Bab V Pasal Bidang PPPA",
+    tupoksi: [
+      "Mengelola rekrutmen calon kader baru (LK-1 / Basic Training) berkala.",
+      "Melaksanakan pembinaan, pengawasan aktivitas, dan pendampingan pasca-training.",
+      "Mengawasi tindak lanjut hasil training (follow-up, upgrading, dan sekolah literasi).",
+      "Melakukan riset dan pemutakhiran kurikulum perkaderan berkoordinasi dengan BPL.",
+    ],
+    programUnggulan: [
+      "Basic Training (LK-1) Gelombang Saintek Berkala",
+      "Follow-Up Terstruktur & Majelis Diskusi NDP Rutin",
+      "Sekolah Pemikiran Keislaman & Keilmuan Sains",
+      "Database Pemetaan Kompetensi & Indeks Keaktifan Kader",
+    ],
+    kabid: "Maya Lestari",
+    wasekum: "Rizky Ramadhan",
+    departemen: [
+      {
+        name: "Departemen Penelitian & Pengembangan (Litbang)",
+        focus: "Riset evaluasi perkaderan, kajian kebutuhan kurikulum, dan pemetaan keilmuan kader.",
+      },
+      {
+        name: "Departemen Pembinaan Anggota & Pengkaderan",
+        focus: "Pelaksanaan rekrutmen LK-1, screening materi, dan pendampingan follow-up harian.",
+      },
+    ],
+    accentColor: "#006144",
+    badgeBg: "#EAF5F1",
+    badgeText: "#006144",
+    borderColor: "#A3D9C9",
+  },
+  {
+    key: "ptkp",
+    code: "PTKP",
+    name: "Bidang Perguruan Tinggi, Kemahasiswaan, dan Kepemudaan",
+    shortDesc:
+      "Bertugas mengoordinasikan partisipasi kader di lingkungan kampus, isu-isu kemahasiswaan, kajian keilmuan/akademik, aksi sosial/politik, serta relasi dengan lembaga atau organisasi kampus.",
+    fullDesc:
+      "Ujung tombak pergerakan eksternal yang mengawal aspirasi mahasiswa, advokasi kebijakan kampus FST dan UIN Sunan Gunung Djati Bandung, kajian kritis sains-teknologi-sosial, serta membangun sinergi bersama ormawa intra-kampus.",
+    dasarPedoman: "Pedoman Kepengurusan HMI Pasal Bidang Kemahasiswaan & Perguruan Tinggi",
+    tupoksi: [
+      "Mengoordinasikan partisipasi kader dalam dinamika kehidupan kampus dan kemahasiswaan.",
+      "Membuka kanal advokasi hak-hak akademik mahasiswa (biaya kuliah, fasilitas lab, transparansi nilai).",
+      "Menginisiasi kajian akademik, diskursus keilmuan sains, dan sikap kritis atas isu kebijakan publik.",
+      "Menjalin relasi strategis dengan pimpinan fakultas/kampus serta ormawa intra (SEMA, DEMA, HMJ).",
+    ],
+    programUnggulan: [
+      "Helpdesk & Advokasi Aspirasi Mahasiswa Saintek",
+      "Diskusi Isu Strategis Sains, Teknologi, dan Kebijakan Publik",
+      "Sekolah Kepemimpinan Mahasiswa & Analisis Sosial",
+      "Sinergi Kolaborasi Gerakan Mahasiswa Lintas HMJ",
+    ],
+    kabid: "Muhammad Farhan",
+    wasekum: "Dimas Pratama",
+    departemen: [
+      {
+        name: "Departemen Perguruan Tinggi & Kemahasiswaan",
+        focus: "Advokasi fasilitas kampus, pendampingan mahasiswa, dan relasi ormawa intra.",
+      },
+      {
+        name: "Departemen Kepemudaan & Kajian Sosial Politik",
+        focus: "Kajian isu nasional, analisis pergerakan pemuda, dan aksi sosial kemasyarakatan.",
+      },
+    ],
+    accentColor: "#0E7490",
+    badgeBg: "#ECFEFF",
+    badgeText: "#0E7490",
+    borderColor: "#A5F3FC",
+  },
+  {
+    key: "kpp",
+    code: "KPP",
+    name: "Bidang Kewirausahaan dan Pengembangan Profesi",
+    shortDesc:
+      "Bertugas mengembangkan minat, bakat, keahlian profesional, serta jiwa kewirausahaan (seperti program pelatihan bisnis atau inovasi teknologi/pertanian) bagi kader.",
+    fullDesc:
+      "Wadah inkubasi kemandirian ekonomi dan kompetensi saintifik kader. Berfokus pada pengembangan start-up inovatif, agroteknologi modern, rekayasa software, literasi finansial, dan pembentukan unit usaha mandiri komisariat.",
+    dasarPedoman: "Pedoman Kepengurusan HMI tentang Kemandirian Finansial & Pengembangan Profesi",
+    tupoksi: [
+      "Mengembangkan minat, bakat, dan keahlian profesional saintifik seluruh anggota komisariat.",
+      "Menumbuhkan jiwa kewirausahaan mandiri, inkubasi bisnis rintisan, dan inovasi teknologi.",
+      "Menginisiasi program pelatihan bisnis aplikatif, pertanian modern/hidroponik, dan digital skills.",
+      "Mengelola unit usaha dan merchandise resmi untuk kemandirian operasional organisasi.",
+    ],
+    programUnggulan: [
+      "Inkubator Bisnis & Start-up Kader Saintek",
+      "Pelatihan Inovasi Agroteknologi & Pertanian Hidroponik",
+      "Tech-Bootcamp: Web Dev, Data Analytics & AI for Cadres",
+      "Badan Usaha Mandiri Komisariat (Merchandise & Event Organizer)",
+    ],
+    kabid: "Fajar Nugraha",
+    wasekum: "Yoga Firmansyah",
+    departemen: [
+      {
+        name: "Departemen Kewirausahaan & Usaha Mandiri",
+        focus: "Pengelolaan bisnis kreatif, bazar produk kader, dan pendanaan mandiri komisariat.",
+      },
+      {
+        name: "Departemen Pengembangan Profesi & Sains Terapan",
+        focus: "Pelatihan skill profesional, sertifikasi teknologi, dan inkubasi inovasi saintifik.",
+      },
+    ],
+    accentColor: "#D97706",
+    badgeBg: "#FFFBEB",
+    badgeText: "#D97706",
+    borderColor: "#FDE68A",
+  },
+  {
+    key: "kohati",
+    code: "PP / KOHATI",
+    name: "Bidang Pemberdayaan Perempuan (Korps HMI-Wati)",
+    shortDesc:
+      "Bertugas meningkatkan kualitas keislaman, intelektualitas, dan peran HMI-Wati melalui Korps HMI-Wati (KOHATI) komisariat.",
+    fullDesc:
+      "Badan semi-otonom yang bertugas melakukan akselerasi kapasitas kepemimpinan, intelektualitas keislaman, pembinaan karakter muslimah saintis, serta advokasi ruang aman bagi perempuan di lingkungan kampus dan masyarakat.",
+    dasarPedoman: "Pedoman Dasar KOHATI (PDK) & Pedoman Kepengurusan HMI",
+    tupoksi: [
+      "Meningkatkan kualitas keislaman, akhlak mulia, dan kepribadian muslimah HMI-Wati.",
+      "Mengasah intelektualitas dan kepemimpinan kader perempuan di sektor sains dan teknologi.",
+      "Menyelenggarakan forum advokasi hak perempuan, edukasi gender Islami, dan pencegahan kekerasan.",
+      "Mengoordinasikan perkaderan khusus KOHATI (LKK) dan sinergi gerakan perempuan kampus.",
+    ],
+    programUnggulan: [
+      "Kajian Fiqih Kontemporer & Kepribadian Muslimah Penggerak",
+      "Women in STEM Forum: Dialog Saintis & Technopreneur Muslimah",
+      "Sekolah Advokasi Ruang Aman Kampus Bebas Kekerasan",
+      "Milad KOHATI & Gerakan Filantropi HMI-Wati Peduli",
+    ],
+    kabid: "Salsabila Putri",
+    wasekum: "Citra Amalia",
+    departemen: [
+      {
+        name: "Departemen Kajian Keislaman & Intelektual Perempuan",
+        focus: "Kajian pemikiran Islam, riset keperempuanan, dan pembinaan ruhiyah HMI-Wati.",
+      },
+      {
+        name: "Departemen Advokasi & Sosial Kemasyarakatan HMI-Wati",
+        focus: "Pendampingan kasus, edukasi ruang aman, dan aksi bakti sosial kemasyarakatan.",
+      },
+    ],
+    accentColor: "#E11D48",
+    badgeBg: "#FFF1F2",
+    badgeText: "#E11D48",
+    borderColor: "#FECDD3",
+  },
+];
 
 export const organizationStructure: StructureMember[] = [
   {
     name: "Aisyah Nurhaliza",
     position: "Ketua Umum",
-    department: "Presidium",
+    department: "Presidium BPH",
     period: "2025-2026",
-    description: "Memimpin arah gerak komisariat dan memastikan koordinasi lintas bidang.",
+    roleType: "ketum",
+    bidangKey: "bph",
+    order: 1,
+    photo: "/ketua-umum.jpg",
+    description:
+      "Mandataris Rapat Anggota Komisariat (RAK). Memimpin arah gerak strategis, penanggung jawab umum kebijakan organisasi, serta memastikan sinergi seluruh bidang fungsional.",
   },
   {
     name: "Hana Maulida",
     position: "Sekretaris Umum",
-    department: "Sekretariat",
+    department: "Presidium BPH",
     period: "2025-2026",
-    description: "Mengelola administrasi, arsip, surat, dan basis data organisasi.",
+    roleType: "sekum",
+    bidangKey: "bph",
+    order: 2,
+    description:
+      "Pengendali sentral tata kelola administrasi, kearsipan persuratan, notulensi ketetapan, dan pemutakhiran basis data kader komisariat.",
   },
   {
     name: "Bayu Aditya",
     position: "Bendahara Umum",
-    department: "Keuangan",
+    department: "Presidium BPH",
     period: "2025-2026",
-    description: "Mengelola tata keuangan, iuran, dan pelaporan kas komisariat.",
+    roleType: "bendum",
+    bidangKey: "bph",
+    order: 3,
+    description:
+      "Pengelola perbendaharaan, transparansi arus kas, distribusi anggaran program kerja, serta akuntabilitas iuran anggota komisariat.",
   },
   {
     name: "Maya Lestari",
-    position: "Ketua Bidang Kaderisasi",
-    department: "Kaderisasi",
+    position: "Ketua Bidang PPPA",
+    department: "Bidang PPPA",
     period: "2025-2026",
-    description: "Mengawal LK-I, follow up, dan pembinaan anggota muda.",
+    roleType: "kabid",
+    bidangKey: "pppa",
+    order: 4,
+    description:
+      "Memimpin siklus kaderisasi formal HMI, mengawal pelaksanaan LK-1, pendampingan follow-up, serta riset mutu pembinaan anggota.",
+  },
+  {
+    name: "Rizky Ramadhan",
+    position: "Wasekum Bidang PPPA",
+    department: "Bidang PPPA",
+    period: "2025-2026",
+    roleType: "wasekum",
+    bidangKey: "pppa",
+    order: 5,
+    description:
+      "Mengadministrasikan database kader baru, presensi follow-up, berkas sertifikasi kader, dan modul kurikulum perkaderan.",
+  },
+  {
+    name: "Anisa Fitri",
+    position: "Koordinator Litbang & Keilmuan",
+    department: "Bidang PPPA",
+    period: "2025-2026",
+    roleType: "departemen",
+    bidangKey: "pppa",
+    order: 6,
+    description:
+      "Merancang kurikulum bacaan kader, riset evaluasi pengkaderan, serta menyelenggarakan majelis diskusi Nilai Dasar Perjuangan (NDP).",
   },
   {
     name: "Muhammad Farhan",
     position: "Ketua Bidang PTKP",
-    department: "PTKP",
+    department: "Bidang PTKP",
     period: "2025-2026",
-    description: "Mengelola kanal advokasi, aspirasi, dan kajian isu kemahasiswaan.",
+    roleType: "kabid",
+    bidangKey: "ptkp",
+    order: 7,
+    description:
+      "Mengawal dinamika kampus, memimpin advokasi hak-hak mahasiswa saintek, kajian isu sosial-politik, dan koordinasi lintas lembaga kemahasiswaan.",
   },
   {
-    name: "Nadia Zahra",
-    position: "Ketua Bidang Media",
-    department: "Media dan Komunikasi",
+    name: "Dimas Pratama",
+    position: "Wasekum Bidang PTKP",
+    department: "Bidang PTKP",
     period: "2025-2026",
-    description: "Mengelola publikasi, dokumentasi, dan kanal digital komisariat.",
-  },
-  {
-    name: "Anisa Fitri",
-    position: "Koordinator Keilmuan",
-    department: "Kaderisasi",
-    period: "2025-2026",
-    description: "Menyusun forum kajian, diskusi tematik, dan kurikulum bacaan kader.",
+    roleType: "wasekum",
+    bidangKey: "ptkp",
+    order: 8,
+    description:
+      "Mengelola administrasi persuratan audiensi advokasi kampus, dokumentasi berkas aspirasi, dan relasi organisasi kemitraan.",
   },
   {
     name: "Ilham Saputra",
-    position: "Koordinator Pengabdian",
-    department: "Sosial Masyarakat",
+    position: "Koordinator Advokasi & Pengabdian",
+    department: "Bidang PTKP",
     period: "2025-2026",
-    description: "Merancang program pengabdian sosial berbasis keilmuan saintek.",
+    roleType: "departemen",
+    bidangKey: "ptkp",
+    order: 9,
+    description:
+      "Mengoperasikan layanan helpdesk aspirasi mahasiswa dan mengoordinasikan aksi kepedulian sosial kemasyarakatan kader.",
+  },
+  {
+    name: "Fajar Nugraha",
+    position: "Ketua Bidang KPP",
+    department: "Bidang KPP",
+    period: "2025-2026",
+    roleType: "kabid",
+    bidangKey: "kpp",
+    order: 10,
+    description:
+      "Mengembangkan ekosistem technopreneurship kader, pelatihan keprofesian sains & teknologi, serta kemandirian ekonomi komisariat.",
+  },
+  {
+    name: "Yoga Firmansyah",
+    position: "Wasekum Bidang KPP",
+    department: "Bidang KPP",
+    period: "2025-2026",
+    roleType: "wasekum",
+    bidangKey: "kpp",
+    order: 11,
+    description:
+      "Mencatat inventarisasi aset usaha mandiri, pembukuan unit bisnis komisariat, dan administrasi kerja sama profesional.",
+  },
+  {
+    name: "Luthfi Hakim",
+    position: "Koordinator Inovasi & Sains Terapan",
+    department: "Bidang KPP",
+    period: "2025-2026",
+    roleType: "departemen",
+    bidangKey: "kpp",
+    order: 12,
+    description:
+      "Memfasilitasi inkubasi startup teknologi, pelatihan hidroponik modern, dan workshop digital tools saintifik.",
+  },
+  {
+    name: "Salsabila Putri",
+    position: "Ketua Bidang PP / Ketua KOHATI",
+    department: "Bidang PP / KOHATI",
+    period: "2025-2026",
+    roleType: "kabid",
+    bidangKey: "kohati",
+    order: 13,
+    description:
+      "Memimpin Korps HMI-Wati komisariat, mengakselerasi kepemimpinan intelektual muslimah, dan memperkuat pembinaan karakter HMI-Wati.",
+  },
+  {
+    name: "Citra Amalia",
+    position: "Wasekum Bidang PP / Sekretaris KOHATI",
+    department: "Bidang PP / KOHATI",
+    period: "2025-2026",
+    roleType: "wasekum",
+    bidangKey: "kohati",
+    order: 14,
+    description:
+      "Mengelola administrasi persuratan khusus KOHATI, database HMI-Wati aktif, dan dokumentasi agenda keperempuanan.",
+  },
+  {
+    name: "Dea Kartika",
+    position: "Bendahara KOHATI",
+    department: "Bidang PP / KOHATI",
+    period: "2025-2026",
+    roleType: "bendum",
+    bidangKey: "kohati",
+    order: 15,
+    description:
+      "Mengelola keuangan dan kas kegiatan KOHATI serta menginisiasi program penggalangan dana kreatif keperempuanan.",
   },
 ];
 

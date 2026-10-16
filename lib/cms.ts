@@ -161,6 +161,7 @@ export async function getSiteSettings(): Promise<CmsDoc | null> {
       collection: "site-settings",
       limit: 1,
       depth: 2,
+      overrideAccess: true,
     });
     return (result.docs[0] as CmsDoc | undefined) ?? null;
   } catch {
@@ -464,7 +465,8 @@ export async function getCadres(options: GetCadresOptions = {}): Promise<CmsFind
       page,
       where,
       sort: "-batchYear",
-      depth: 1,
+      depth: 0,
+      overrideAccess: true,
     });
     return result as CmsFindResult;
   } catch {
@@ -488,6 +490,7 @@ export async function getOrganizationStructure(period?: string): Promise<CmsDoc[
       where,
       sort: "order",
       depth: 2,
+      overrideAccess: true,
     });
     return result.docs as CmsDoc[];
   } catch {

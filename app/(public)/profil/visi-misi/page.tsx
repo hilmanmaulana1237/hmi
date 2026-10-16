@@ -1,4 +1,5 @@
 import { PageHeader } from "@/components/sections/page-header";
+import { getSiteSettings } from "@/lib/cms";
 import { 
   BookOpen, 
   Brain, 
@@ -17,7 +18,25 @@ export const metadata = {
   description: "Visi, Misi, Arah Gerak, dan Landasan Perjuangan HMI Komisariat Sains & Teknologi UIN Sunan Gunung Djati Bandung.",
 };
 
-const misiList = [
+const DEFAULT_VISION =
+  "Terwujudnya HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung sebagai pusat kaderisasi yang unggul, progresif, dan berintegritas dalam mencetak insan akademis, pencipta, pengabdi yang bernafaskan Islam serta mampu mengintegrasikan nilai-nilai keislaman, keilmuan, dan teknologi untuk memberikan kontribusi nyata bagi kemajuan umat, bangsa, dan peradaban.";
+
+const DEFAULT_VISION_DESC =
+  "Visi tersebut menjadi landasan bagi seluruh aktivitas organisasi dalam membangun kader yang tidak hanya memiliki kemampuan akademik yang baik, tetapi juga memiliki karakter kepemimpinan, kemampuan berpikir kritis, semangat kolaborasi, serta kepedulian terhadap persoalan sosial dan kemasyarakatan.";
+
+const DEFAULT_ARAH_GERAK_QUOTE =
+  "“Yakin Usaha Sampai (YAKUSA) menjadi motivasi pengabdian tiada henti, menyatukan keislaman, keilmuan, dan keorganisasian.”";
+
+const DEFAULT_ARAH_GERAK_DESC = [
+  "Himpunan Mahasiswa Islam (HMI) Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung merupakan organisasi kader yang berkomitmen membentuk insan akademis, pencipta, pengabdi, dan muslim yang bernafaskan Islam serta bertanggung jawab atas terwujudnya masyarakat adil makmur yang diridhai Allah SWT.",
+  "Sebagai bagian dari lingkungan akademik yang berorientasi pada pengembangan ilmu pengetahuan dan teknologi, komisariat hadir untuk menjadi ruang pembelajaran, pengembangan karakter, dan penguatan kepemimpinan bagi seluruh kader. Setiap aktivitas yang dilaksanakan tidak hanya bertujuan meningkatkan kapasitas intelektual, tetapi juga menanamkan nilai-nilai keislaman, integritas, profesionalisme, dan semangat pengabdian kepada masyarakat.",
+  "Dengan semangat “Yakin Usaha Sampai”, HMI Komisariat Sains dan Teknologi berupaya menjadi organisasi yang adaptif terhadap perkembangan zaman tanpa meninggalkan identitas keislaman dan nilai-nilai perjuangan HMI."
+];
+
+const DEFAULT_TUJUAN_HMI =
+  "Terbinanya Insan Akademis, Pencipta, Pengabdi yang Bernafaskan Islam dan Bertanggung Jawab atas Terwujudnya Masyarakat Adil Makmur yang Diridhai Allah SWT.";
+
+const defaultMisiList = [
   {
     title: "Memperkuat sistem kaderisasi yang berkelanjutan",
     description: "Mengembangkan proses kaderisasi yang sistematis, terarah, dan berlandaskan nilai-nilai keislaman serta prinsip dasar perjuangan HMI guna melahirkan kader yang memiliki integritas, loyalitas organisasi, dan semangat perjuangan yang tinggi."
@@ -86,7 +105,45 @@ const nilaiList = [
   }
 ];
 
-export default function VisiMisiPage() {
+export default async function VisiMisiPage() {
+  const settings = await getSiteSettings();
+  const vm = (settings?.visionMision as unknown as Record<string, unknown>) || {};
+
+  const vision =
+    (typeof vm.vision === "string" && vm.vision.trim()) ||
+    (typeof settings?.vision === "string" && settings.vision.trim()) ||
+    DEFAULT_VISION;
+
+  const visionDescription =
+    (typeof vm.visionDescription === "string" && vm.visionDescription.trim()) ||
+    (typeof settings?.visionDescription === "string" && settings.visionDescription.trim()) ||
+    DEFAULT_VISION_DESC;
+
+  const arahGerakQuote =
+    (typeof vm.arahGerakQuote === "string" && vm.arahGerakQuote.trim()) ||
+    DEFAULT_ARAH_GERAK_QUOTE;
+
+  const arahGerakDescRaw =
+    typeof vm.arahGerakDescription === "string" && vm.arahGerakDescription.trim()
+      ? vm.arahGerakDescription.trim()
+      : null;
+
+  const arahGerakParagraphs = arahGerakDescRaw
+    ? arahGerakDescRaw.split(/\n\s*\n/).filter(Boolean)
+    : DEFAULT_ARAH_GERAK_DESC;
+
+  const tujuanHmi =
+    (typeof vm.tujuanHmi === "string" && vm.tujuanHmi.trim()) ||
+    DEFAULT_TUJUAN_HMI;
+
+  const activeMissions =
+    Array.isArray(vm.missions) && vm.missions.length > 0
+      ? (vm.missions as Array<{ title?: string; description?: string }>).map((m) => ({
+          title: m.title || "",
+          description: m.description || "",
+        }))
+      : defaultMisiList;
+
   return (
     <main className="relative min-h-screen pb-16">
       {/* Grid Background */}
@@ -119,20 +176,14 @@ export default function VisiMisiPage() {
             
             <div className="rounded-2xl border border-[#DCE8E2] bg-[#F6F8F7] p-6 shadow-sm">
               <p className="text-sm font-semibold text-[#003324] leading-relaxed italic">
-                &ldquo;Yakin Usaha Sampai (YAKUSA) menjadi motivasi pengabdian tiada henti, menyatukan keislaman, keilmuan, dan keorganisasian.&rdquo;
+                &ldquo;{arahGerakQuote.replace(/^["“]+|["”]+$/g, "")}&rdquo;
               </p>
             </div>
           </div>
           <div className="lg:col-span-7 space-y-6 text-[#334E44] leading-relaxed text-justify">
-            <p>
-              Himpunan Mahasiswa Islam (HMI) Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung merupakan organisasi kader yang berkomitmen membentuk insan akademis, pencipta, pengabdi, dan muslim yang bernafaskan Islam serta bertanggung jawab atas terwujudnya masyarakat adil makmur yang diridhai Allah SWT.
-            </p>
-            <p>
-              Sebagai bagian dari lingkungan akademik yang berorientasi pada pengembangan ilmu pengetahuan dan teknologi, komisariat hadir untuk menjadi ruang pembelajaran, pengembangan karakter, dan penguatan kepemimpinan bagi seluruh kader. Setiap aktivitas yang dilaksanakan tidak hanya bertujuan meningkatkan kapasitas intelektual, tetapi juga menanamkan nilai-nilai keislaman, integritas, profesionalisme, dan semangat pengabdian kepada masyarakat.
-            </p>
-            <p>
-              Dengan semangat &ldquo;Yakin Usaha Sampai&rdquo;, HMI Komisariat Sains dan Teknologi berupaya menjadi organisasi yang adaptif terhadap perkembangan zaman tanpa meninggalkan identitas keislaman dan nilai-nilai perjuangan HMI.
-            </p>
+            {arahGerakParagraphs.map((para, idx) => (
+              <p key={idx}>{para}</p>
+            ))}
           </div>
         </div>
       </section>
@@ -149,11 +200,13 @@ export default function VisiMisiPage() {
             </div>
             <span className="text-xs font-black uppercase tracking-[0.2em] text-[#00E676]">VISI UTAMA</span>
             <h3 className="text-xl font-bold leading-relaxed sm:text-2xl lg:text-3xl text-balance">
-              &ldquo;Terwujudnya HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung sebagai pusat kaderisasi yang unggul, progresif, dan berintegritas dalam mencetak insan akademis, pencipta, pengabdi yang bernafaskan Islam serta mampu mengintegrasikan nilai-nilai keislaman, keilmuan, dan teknologi untuk memberikan kontribusi nyata bagi kemajuan umat, bangsa, dan peradaban.&rdquo;
+              &ldquo;{vision.replace(/^["“]+|["”]+$/g, "")}&rdquo;
             </h3>
-            <div className="mx-auto max-w-2xl text-xs leading-relaxed text-emerald-200/80 pt-4 border-t border-white/10">
-              Visi tersebut menjadi landasan bagi seluruh aktivitas organisasi dalam membangun kader yang tidak hanya memiliki kemampuan akademik yang baik, tetapi juga memiliki karakter kepemimpinan, kemampuan berpikir kritis, semangat kolaborasi, serta kepedulian terhadap persoalan sosial dan kemasyarakatan.
-            </div>
+            {visionDescription && (
+              <div className="mx-auto max-w-2xl text-xs leading-relaxed text-emerald-200/80 pt-4 border-t border-white/10">
+                {visionDescription}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -162,11 +215,13 @@ export default function VisiMisiPage() {
       <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center mb-16 space-y-4">
           <span className="text-xs font-black uppercase tracking-[0.2em] text-[#006B3F]">MISI KAMI</span>
-          <h2 className="text-3xl font-black text-[#10231C] sm:text-4xl">7 Misi Strategis Organisasi</h2>
+          <h2 className="text-3xl font-black text-[#10231C] sm:text-4xl">
+            {activeMissions.length} Misi Strategis Organisasi
+          </h2>
           <p className="mx-auto max-w-2xl text-[#334E44]">Langkah-langkah strategis yang kami jalankan secara konsisten demi mewujudkan visi besar komisariat.</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {misiList.map((misi, idx) => (
+          {activeMissions.map((misi, idx) => (
             <div 
               key={idx} 
               className="group relative flex flex-col justify-between rounded-3xl border border-[#DCE8E2] bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#006B3F]/30"
@@ -230,7 +285,7 @@ export default function VisiMisiPage() {
           <div className="pt-6 border-t border-slate-100">
             <p className="text-[10px] font-black uppercase tracking-widest text-[#006B3F] mb-3">Tujuan HMI (Pasal 4 AD HMI)</p>
             <blockquote className="text-lg sm:text-xl font-black leading-relaxed text-[#003324] max-w-2xl mx-auto italic">
-              &ldquo;Terbinanya Insan Akademis, Pencipta, Pengabdi yang Bernafaskan Islam dan Bertanggung Jawab atas Terwujudnya Masyarakat Adil Makmur yang Diridhai Allah SWT.&rdquo;
+              &ldquo;{tujuanHmi.replace(/^["“]+|["”]+$/g, "")}&rdquo;
             </blockquote>
           </div>
         </div>
@@ -238,3 +293,4 @@ export default function VisiMisiPage() {
     </main>
   );
 }
+

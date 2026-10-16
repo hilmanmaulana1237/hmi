@@ -14,7 +14,13 @@ export const Cadres: CollectionConfig = {
   admin: {
     group: "Kaderisasi",
     useAsTitle: "fullName",
-    defaultColumns: ["fullName", "studyProgram", "cadreStatus", "batchYear"],
+    defaultColumns: [
+      "fullName",
+      "studyProgram",
+      "cadreStatus",
+      "trainingBatch",
+      "batchYear",
+    ],
     components: {
       beforeListTable: ["@/components/admin/cadres-actions#CadresActions"],
     },
@@ -33,6 +39,7 @@ export const Cadres: CollectionConfig = {
     { name: "faculty", type: "text" },
     { name: "studyProgram", type: "text", required: true },
     { name: "nim", type: "text", access: { read: authenticatedField } },
+    { name: "trainingBatch", type: "text", label: "Angkatan LK" },
     { name: "batchYear", type: "number", required: true },
     {
       name: "cadreStatus",

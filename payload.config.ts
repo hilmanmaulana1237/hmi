@@ -58,9 +58,12 @@ export default buildConfig({
         "postgresql://postgres:postgres@localhost:5432/hmi",
       connectionTimeoutMillis: databaseConnectionTimeoutMs,
       max: databasePoolMax,
-      ssl: process.env.DATABASE_URL?.includes("supabase")
-        ? { rejectUnauthorized: false }
-        : undefined,
+      ssl:
+        process.env.DATABASE_URL?.includes("supabase") ||
+        process.env.DATABASE_URL?.includes("neon.tech") ||
+        process.env.DATABASE_URL?.includes("sslmode=require")
+          ? { rejectUnauthorized: false }
+          : undefined,
     },
   }),
   editor: lexicalEditor(),

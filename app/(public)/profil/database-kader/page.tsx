@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function DatabaseKaderPage() {
-  const result = await getCadres({ limit: 200 });
+  const result = await getCadres({ limit: 1000 });
 
   // Map to shape expected by CadreTable
   const cadres = result.docs.map((c) => ({
