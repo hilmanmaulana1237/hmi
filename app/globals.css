@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #f4f7f6;
@@ -57,3 +58,147 @@ summary::-webkit-details-marker {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* ─────────────────────────────────────────────────────────────────
+   CMS RichText Content Styling (Payload Lexical)
+   Memastikan format H1-H4, Paragraf, Quote, List tampil rapi & proporsional
+   ───────────────────────────────────────────────────────────────── */
+.payload-richtext {
+  color: #243831;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+
+.payload-richtext h1 {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #10231c;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.payload-richtext h2 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #10231c;
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+.payload-richtext h3 {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: #10231c;
+  line-height: 1.4;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.payload-richtext h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #10231c;
+  line-height: 1.5;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.payload-richtext p {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  line-height: 1.85;
+  color: #2D4139;
+}
+
+.payload-richtext strong,
+.payload-richtext b {
+  font-weight: 800;
+  color: #10231c;
+}
+
+.payload-richtext em,
+.payload-richtext i {
+  font-style: italic;
+}
+
+.payload-richtext u {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.payload-richtext ul {
+  list-style-type: disc !important;
+  padding-left: 1.75rem !important;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.payload-richtext ol {
+  list-style-type: decimal !important;
+  padding-left: 1.75rem !important;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.payload-richtext li {
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.payload-richtext blockquote {
+  border-left: 4px solid #006144;
+  background-color: #f0f7f4;
+  padding: 1.25rem 1.5rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #233d33;
+}
+
+.payload-richtext a {
+  color: #006144;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.payload-richtext a:hover {
+  color: #008f62;
+}
+
+.payload-richtext hr {
+  border: 0;
+  border-top: 1px solid #dce8e2;
+  margin: 2.5rem 0;
+}
+
+.payload-richtext code {
+  background-color: #f0f7f4;
+  color: #006144;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.375rem;
+  font-size: 0.9em;
+  font-family: monospace;
+}
+
+.payload-richtext pre {
+  background-color: #10231c;
+  color: #f6f8f7;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.payload-richtext img {
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+}
+
