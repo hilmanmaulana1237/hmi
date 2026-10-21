@@ -24,6 +24,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { CadresActions as CadresActions_fc9505c1cd56612df129f93f1c636cc6 } from '@/components/admin/cadres-actions'
 import { Lk1ExportAction as Lk1ExportAction_f0585b2d65ae72f98f9c1700cbcf1dda } from '@/components/admin/lk1-export-action'
 import { HmiAdminDashboard as HmiAdminDashboard_3a80fb6cab3feee16fb19b71e86da805 } from '../../../components/admin/hmi-admin-dashboard'
+import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 import { HmiControlCenter as HmiControlCenter_75f2475713a3dce732bcd188e01cad81 } from '../../../components/admin/hmi-control-center'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
@@ -55,6 +56,7 @@ export const importMap = {
   "@/components/admin/cadres-actions#CadresActions": CadresActions_fc9505c1cd56612df129f93f1c636cc6,
   "@/components/admin/lk1-export-action#Lk1ExportAction": Lk1ExportAction_f0585b2d65ae72f98f9c1700cbcf1dda,
   "./components/admin/hmi-admin-dashboard#HmiAdminDashboard": HmiAdminDashboard_3a80fb6cab3feee16fb19b71e86da805,
+  "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
   "./components/admin/hmi-control-center#HmiControlCenter": HmiControlCenter_75f2475713a3dce732bcd188e01cad81,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

@@ -8,6 +8,8 @@ export const metadata = {
   description: "Dokumentasi kegiatan HMI Komisariat Sains dan Teknologi.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function GaleriPage() {
   const result = await getGallery({ limit: 60 });
 

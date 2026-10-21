@@ -1,5 +1,6 @@
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import path from "path";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -22,6 +23,19 @@ const databasePoolMax =
   Number.isFinite(parsedDatabasePoolMax) && parsedDatabasePoolMax > 0
     ? parsedDatabasePoolMax
     : 1;
+
+let databaseConnectionString =
+  process.env.DATABASE_URL ??
+  "postgresql://postgres:postgres@localhost:5432/hmi";
+
+if (
+  databaseConnectionString.includes("sslmode=require") &&
+  !databaseConnectionString.includes("uselibpqcompat")
+) {
+  databaseConnectionString += databaseConnectionString.includes("?")
+    ? "&uselibpqcompat=true"
+    : "?uselibpqcompat=true";
+}
 
 export default buildConfig({
   admin: {
@@ -50,18 +64,25 @@ export default buildConfig({
     },
   },
   collections,
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: {
+        media: true,
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    }),
+  ],
   db: postgresAdapter({
     push: process.env.PAYLOAD_DB_PUSH === "true",
     pool: {
-      connectionString:
-        process.env.DATABASE_URL ??
-        "postgresql://postgres:postgres@localhost:5432/hmi",
+      connectionString: databaseConnectionString,
       connectionTimeoutMillis: databaseConnectionTimeoutMs,
       max: databasePoolMax,
       ssl:
-        process.env.DATABASE_URL?.includes("supabase") ||
-        process.env.DATABASE_URL?.includes("neon.tech") ||
-        process.env.DATABASE_URL?.includes("sslmode=require")
+        databaseConnectionString.includes("supabase") ||
+        databaseConnectionString.includes("neon.tech") ||
+        databaseConnectionString.includes("sslmode=require")
           ? { rejectUnauthorized: false }
           : undefined,
     },

@@ -35,7 +35,7 @@ type SlugDoc = { slug: string };
 const parsedCmsTimeout = Number(process.env.CMS_QUERY_TIMEOUT_MS);
 const CMS_TIMEOUT_MS = Number.isFinite(parsedCmsTimeout)
   ? parsedCmsTimeout
-  : 5000;
+  : 15000;
 const parsedCmsRetryCooldown = Number(process.env.CMS_RETRY_COOLDOWN_MS);
 const CMS_RETRY_COOLDOWN_MS = Number.isFinite(parsedCmsRetryCooldown)
   ? parsedCmsRetryCooldown
