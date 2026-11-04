@@ -15,7 +15,14 @@ export const LK1Registrations: CollectionConfig = {
   admin: {
     group: "Kaderisasi",
     useAsTitle: "fullName",
-    defaultColumns: ["registrationCode", "fullName", "status", "submittedAt"],
+    defaultColumns: [
+      "registrationCode",
+      "fullName",
+      "studyProgram",
+      "mentorName",
+      "status",
+      "submittedAt",
+    ],
     components: {
       beforeListTable: ["@/components/admin/lk1-export-action#Lk1ExportAction"],
     },
@@ -51,9 +58,50 @@ export const LK1Registrations: CollectionConfig = {
     { name: "semester", type: "number" },
     { name: "nim", type: "text", required: true },
     { name: "className", type: "text" },
+
+    // Mentor Selection Fields
+    {
+      name: "mentor",
+      type: "relationship",
+      relationTo: "mentors",
+      label: "Mentor Pilihan",
+    },
+    {
+      name: "mentorName",
+      type: "text",
+      label: "Nama Mentor Pilihan",
+    },
+    {
+      name: "mentorRole",
+      type: "text",
+      label: "Jabatan / Peran Mentor (misal: Ketua DEMA, Ketua HMJ)",
+    },
+    {
+      name: "mentorWhatsappGroup",
+      type: "text",
+      label: "Link WhatsApp Group Mentor",
+    },
+
     { name: "motivation", type: "textarea", required: true },
     { name: "organizationExperience", type: "textarea" },
-    { name: "interestFields", type: "select", hasMany: true, options: ["Kaderisasi", "PTKP", "Kewirausahaan", "Media dan Komunikasi", "Keilmuan", "Keagamaan", "Sosial Masyarakat"] },
+    {
+      name: "interestFields",
+      type: "select",
+      hasMany: true,
+      options: [
+        "Kaderisasi",
+        "PTKP",
+        "Kewirausahaan",
+        "Media dan Komunikasi",
+        "Keilmuan",
+        "Keagamaan",
+        "Sosial Masyarakat",
+      ],
+    },
+
+    // Berkas & Bukti (Both Media Upload & External Link)
+    { name: "photoUrl", type: "text", label: "Link Pas Foto (Google Drive)" },
+    { name: "paymentProofUrl", type: "text", label: "Link Bukti Bayar (Google Drive)" },
     { name: "paymentProof", type: "upload", relationTo: "media" },
     {
       name: "paymentStatus",
@@ -103,6 +151,10 @@ export const LK1Registrations: CollectionConfig = {
     { name: "hasBeenContacted", type: "checkbox", defaultValue: false },
     { name: "screeningSchedule", type: "date" },
     { name: "screeningResult", type: "textarea" },
+    { name: "screeningScoreBtq", type: "text", label: "Nilai BTQ" },
+    { name: "screeningScoreHmi", type: "text", label: "Nilai Ke-HMI-an" },
+    { name: "screeningScoreKebangsaan", type: "text", label: "Nilai Wawasan Kebangsaan" },
+    { name: "screeningNotes", type: "textarea", label: "Catatan Screening" },
     { name: "followUpNote", type: "textarea" },
   ],
 };

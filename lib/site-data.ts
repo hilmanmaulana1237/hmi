@@ -167,7 +167,7 @@ export const events: EventItem[] = [
       "Basic Training LK-I untuk calon kader HMI Komisariat Sains dan Teknologi.",
     image:
       "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=1200&q=80",
-    registrationLink: "https://pendaftaran-lk1-saintek.vercel.app/",
+    registrationLink: "/kaderisasi/daftar-lk-1",
   },
   {
     title: "Kajian Konstitusi HMI",

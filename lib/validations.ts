@@ -7,7 +7,7 @@ export const lk1RegistrationSchema = z.object({
   birthPlace: z.string().optional(),
   birthDate: z.string().optional(),
   whatsapp: z.string().min(8),
-  email: z.email(),
+  email: z.string().email(),
   address: z.string().optional(),
   university: z.string().min(2),
   faculty: z.string().optional(),
@@ -15,9 +15,15 @@ export const lk1RegistrationSchema = z.object({
   semester: z.coerce.number().int().min(1).max(14).optional(),
   nim: z.string().min(4),
   className: z.string().optional(),
-  motivation: z.string().min(20),
+  mentorId: z.string().optional(),
+  mentorName: z.string().optional(),
+  mentorRole: z.string().optional(),
+  mentorWhatsappGroup: z.string().optional(),
+  motivation: z.string().min(10),
   organizationExperience: z.string().optional(),
   interestFields: z.array(z.string()).optional(),
+  photoUrl: z.string().optional(),
+  paymentProofUrl: z.string().optional(),
 });
 
 export const advocacyReportSchema = z.object({

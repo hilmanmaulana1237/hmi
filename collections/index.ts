@@ -10,6 +10,7 @@ import { FormerChairpersons } from "./FormerChairpersons";
 import { Gallery } from "./Gallery";
 import { LK1Registrations } from "./LK1Registrations";
 import { Media } from "./Media";
+import { Mentors } from "./Mentors";
 import { NavigationItems } from "./NavigationItems";
 import { News } from "./News";
 import { Opinions } from "./Opinions";
@@ -32,6 +33,7 @@ export const collections = [
   Documents,
   Cadres,
   LK1Registrations,
+  Mentors,
   OrganizationStructure,
   FormerChairpersons,
   AdvocacyReports,

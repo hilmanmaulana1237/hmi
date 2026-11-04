@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { AtSign, Mail, MapPin, Phone, Share2, User, Video } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone, Share2, User, Video, ShieldCheck } from "lucide-react";
 import { siteConfig } from "@/lib/site-data";
 
 const navigation = [
@@ -20,7 +20,8 @@ const information = [
   { label: "Pengumuman", href: "/informasi/pengumuman" },
   { label: "Layanan PTKP", href: "/layanan/advokasi" },
   { label: "Pusat Dokumen", href: "/layanan/pusat-dokumen" },
-  { label: "Daftar LK-I", href: "https://pendaftaran-lk1-saintek.vercel.app/" },
+  { label: "Daftar LK-I", href: "/kaderisasi/daftar-lk-1" },
+  { label: "Panel Monitoring LK1", href: "/monitorlk" },
 ];
 
 type SiteSettingsData = Record<string, unknown> | null;
@@ -131,7 +132,16 @@ export function SiteFooter({ settings }: { settings?: SiteSettingsData }) {
       <div className="border-t border-white/10 px-4 py-6">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 text-center text-xs text-white/55 sm:flex-row sm:text-left">
           <span>&copy; {new Date().getFullYear()} {orgName}. All Rights Reserved.</span>
-          <span className="font-black text-[#F2994A]">#YakinUsahaSampai</span>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/monitorlk"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[11px] font-bold text-white/80 transition hover:bg-white/15 hover:text-white"
+            >
+              <ShieldCheck className="h-3.5 w-3.5 text-[#25D366]" />
+              <span>Panel Monitoring LK1</span>
+            </Link>
+            <span className="font-black text-[#F2994A]">#YakinUsahaSampai</span>
+          </div>
         </div>
       </div>
     </footer>

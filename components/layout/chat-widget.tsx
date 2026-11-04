@@ -2,8 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import { Bot, Send, X, Trash2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export function ChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [input, setInput] = useState("");
@@ -146,6 +148,14 @@ export function ChatWidget() {
       setIsLoading(false);
     }
   };
+
+  if (
+    pathname === "/kaderisasi/daftar-lk-1" ||
+    pathname?.startsWith("/kaderisasi/daftar-lk-1") ||
+    pathname?.startsWith("/monitorlk")
+  ) {
+    return null;
+  }
 
   return (
     <>

@@ -3,6 +3,7 @@ import {
   advocacyReportSchema,
   lk1RegistrationSchema,
 } from "@/lib/validations";
+import { defaultMentors } from "./default-mentors";
 
 async function readBody(req: PayloadRequest) {
   const contentType = req.headers.get("content-type") ?? "";
@@ -50,6 +51,41 @@ function validationError(error: unknown) {
 
 export const payloadEndpoints: Endpoint[] = [
   {
+    path: "/mentors",
+    method: "get",
+    handler: async (req) => {
+      try {
+        const result = await req.payload.find({
+          collection: "mentors",
+          limit: 50,
+          where: {
+            isActive: {
+              equals: true,
+            },
+          },
+          sort: "order",
+        });
+
+        if (result.docs && result.docs.length > 0) {
+          return Response.json({
+            ok: true,
+            mentors: result.docs,
+          });
+        }
+
+        return Response.json({
+          ok: true,
+          mentors: defaultMentors,
+        });
+      } catch (e) {
+        return Response.json({
+          ok: true,
+          mentors: defaultMentors,
+        });
+      }
+    },
+  },
+  {
     path: "/lk1",
     method: "post",
     handler: async (req) => {
@@ -69,6 +105,8 @@ export const payloadEndpoints: Endpoint[] = [
         ok: true,
         registrationCode: registration.registrationCode,
         status: registration.status,
+        mentorName: registration.mentorName,
+        mentorWhatsappGroup: registration.mentorWhatsappGroup,
       });
     },
   },
@@ -92,6 +130,7 @@ export const payloadEndpoints: Endpoint[] = [
           or: [
             { registrationCode: { equals: query } },
             { email: { equals: query } },
+            { nim: { equals: query } },
           ],
         },
       });
@@ -113,9 +152,28 @@ export const payloadEndpoints: Endpoint[] = [
         registration: {
           registrationCode: registration.registrationCode,
           fullName: registration.fullName,
+          nickname: registration.nickname,
+          gender: registration.gender,
+          university: registration.university,
+          faculty: registration.faculty,
           studyProgram: registration.studyProgram,
+          semester: registration.semester,
+          nim: registration.nim,
+          whatsapp: registration.whatsapp,
+          email: registration.email,
           status: registration.status,
+          paymentStatus: registration.paymentStatus,
+          mentorName: registration.mentorName,
+          mentorRole: registration.mentorRole,
+          mentorWhatsappGroup: registration.mentorWhatsappGroup,
+          screeningSchedule: registration.screeningSchedule,
+          screeningResult: registration.screeningResult,
+          screeningScoreBtq: registration.screeningScoreBtq,
+          screeningScoreHmi: registration.screeningScoreHmi,
+          screeningScoreKebangsaan: registration.screeningScoreKebangsaan,
+          screeningNotes: registration.screeningNotes,
           adminNote: registration.adminNote,
+          submittedAt: registration.submittedAt,
         },
       });
     },
@@ -202,16 +260,30 @@ export const payloadEndpoints: Endpoint[] = [
       });
 
       const headers = [
-        "registrationCode", "fullName", "nickname", "gender", "whatsapp",
-        "email", "university", "faculty", "studyProgram", "semester",
-        "nim", "status", "paymentStatus", "submittedAt"
+        "registrationCode",
+        "fullName",
+        "nickname",
+        "gender",
+        "whatsapp",
+        "email",
+        "university",
+        "faculty",
+        "studyProgram",
+        "semester",
+        "nim",
+        "mentorName",
+        "mentorRole",
+        "mentorWhatsappGroup",
+        "status",
+        "paymentStatus",
+        "submittedAt",
       ];
 
       const escape = (val: any) => `"${String(val ?? "").replace(/"/g, '""')}"`;
       const rows = data.docs.map((doc: any) =>
-        headers.map(h => escape(doc[h])).join(",")
+        headers.map((h) => escape(doc[h])).join(","),
       );
-      
+
       const csv = [headers.join(","), ...rows].join("\n");
 
       return new Response(csv, {
@@ -230,9 +302,18 @@ export const payloadEndpoints: Endpoint[] = [
       const isTemplate = url.searchParams.get("template") === "true";
 
       const headers = [
-        "fullName", "nickname", "gender", "university", "faculty",
-        "studyProgram", "nim", "batchYear", "cadreStatus", "phonePrivate",
-        "emailPrivate", "isPublic"
+        "fullName",
+        "nickname",
+        "gender",
+        "university",
+        "faculty",
+        "studyProgram",
+        "nim",
+        "batchYear",
+        "cadreStatus",
+        "phonePrivate",
+        "emailPrivate",
+        "isPublic",
       ];
 
       let csv = headers.join(",") + "\n";
@@ -247,7 +328,7 @@ export const payloadEndpoints: Endpoint[] = [
 
         const escape = (val: any) => `"${String(val ?? "").replace(/"/g, '""')}"`;
         const rows = data.docs.map((doc: any) =>
-          headers.map(h => escape(doc[h])).join(",")
+          headers.map((h) => escape(doc[h])).join(","),
         );
         csv += rows.join("\n");
       }
@@ -268,26 +349,31 @@ export const payloadEndpoints: Endpoint[] = [
         const request = req as Request;
         const formData = await request.formData();
         const file = formData.get("file") as File;
-        
+
         if (!file) return validationError("No file provided");
 
         const text = await file.text();
         const lines = text.trim().split("\n");
-        if (lines.length < 2) return validationError("File is empty or missing data");
+        if (lines.length < 2)
+          return validationError("File is empty or missing data");
 
-        const headers = lines[0].split(",").map(h => h.replace(/^"|"$/g, "").trim());
+        const headers = lines[0]
+          .split(",")
+          .map((h) => h.replace(/^"|"$/g, "").trim());
         const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
 
         let count = 0;
         for (let i = 1; i < lines.length; i++) {
-          const vals = lines[i].split(regex).map(val => val.replace(/^"|"$/g, "").replace(/""/g, '"').trim());
+          const vals = lines[i]
+            .split(regex)
+            .map((val) => val.replace(/^"|"$/g, "").replace(/""/g, '"').trim());
           const obj: any = {};
           headers.forEach((h, index) => {
             obj[h] = vals[index];
           });
 
-          // Basic validation and mapping
-          if (!obj.fullName || !obj.studyProgram || !obj.batchYear || !obj.cadreStatus) continue;
+          if (!obj.fullName || !obj.studyProgram || !obj.batchYear || !obj.cadreStatus)
+            continue;
 
           await req.payload.create({
             collection: "cadres",

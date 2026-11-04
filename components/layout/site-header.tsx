@@ -47,7 +47,7 @@ const infoLinks = [
 
 const cadreLinks = [
   { label: "Informasi LK-I", href: "/kaderisasi/lk-1", icon: BookOpenText },
-  { label: "Daftar LK-I", href: "https://pendaftaran-lk1-saintek.vercel.app/", icon: IdCard },
+  { label: "Daftar LK-I", href: "/kaderisasi/daftar-lk-1", icon: IdCard },
   { label: "Status Pendaftaran", href: "/kaderisasi/status-pendaftaran", icon: ShieldCheck },
   { label: "Materi Kaderisasi", href: "/kaderisasi/materi", icon: FileArchive },
 ];
@@ -129,7 +129,7 @@ export function SiteHeader({ settings }: { settings?: SiteSettingsData }) {
             <Dropdown label="Kaderisasi" icon={IdCard} links={cadreLinks} />
             <Dropdown label="Layanan" icon={FileArchive} links={serviceLinks} />
             <NavLink
-              href="https://pendaftaran-lk1-saintek.vercel.app/"
+              href="/kaderisasi/daftar-lk-1"
               icon={IdCard}
               label="Daftar LK-I"
               variant="accent"
@@ -182,7 +182,7 @@ export function SiteHeader({ settings }: { settings?: SiteSettingsData }) {
         <MobileLink href="/galeri" icon={GalleryHorizontal} label="Galeri" onClick={() => setOpen(false)} />
         <MobileGroup label="Kaderisasi" links={cadreLinks} onNavigate={() => setOpen(false)} />
         <MobileGroup label="Layanan" links={serviceLinks} onNavigate={() => setOpen(false)} />
-        <MobileLink href="https://pendaftaran-lk1-saintek.vercel.app/" icon={IdCard} label="Daftar LK-I" onClick={() => setOpen(false)} accent />
+        <MobileLink href="/kaderisasi/daftar-lk-1" icon={IdCard} label="Daftar LK-I" onClick={() => setOpen(false)} accent />
         <Link
           href="/admin"
           onClick={() => setOpen(false)}

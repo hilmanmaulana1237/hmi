@@ -76,7 +76,7 @@ async function seed() {
             heroTitle: siteConfig.organization,
             heroSubtitle: siteConfig.tagline,
             primaryCtaLabel: "Daftar LK-I",
-            primaryCtaHref: "https://pendaftaran-lk1-saintek.vercel.app/",
+            primaryCtaHref: "/kaderisasi/daftar-lk-1",
             secondaryCtaLabel: "Lihat Profil Komisariat",
             secondaryCtaHref: "/profil",
             totalCadres: 420,

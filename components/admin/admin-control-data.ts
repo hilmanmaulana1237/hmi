@@ -72,7 +72,7 @@ export const cmsModules = [
   {
     title: "Kaderisasi",
     description:
-      "Database kader, pendaftar LK-I, screening, pembayaran, struktur, dan arsip ketua.",
+      "Database kader, pendaftar LK-I, mentor bimbingan, screening, pembayaran, struktur, dan arsip ketua.",
     owner: "Sekretaris Umum / Bidang Kaderisasi / Bendahara",
     items: [
       {
@@ -84,8 +84,14 @@ export const cmsModules = [
       {
         label: "Pendaftaran LK-I",
         slug: "lk1-registrations",
-        action: "Verifikasi peserta, status LK-I, pembayaran, screening",
-        publicPath: "https://pendaftaran-lk1-saintek.vercel.app/",
+        action: "Verifikasi peserta, mentor pilihan, status LK-I, pembayaran, screening",
+        publicPath: "/kaderisasi/daftar-lk-1",
+      },
+      {
+        label: "Mentor LK-I",
+        slug: "mentors",
+        action: "Atur daftar mentor (Ketua DEMA, SEMA, HMJ, dll), foto, bio, dan link grup WhatsApp",
+        publicPath: "/kaderisasi/daftar-lk-1",
       },
       {
         label: "Struktur Pengurus",
@@ -166,7 +172,7 @@ export const roleGuides = [
   "Ketua Umum: membaca seluruh data, mengawasi laporan, dan approve konten strategis.",
   "Sekretaris Umum: database kader, dokumen, surat, dan administrasi.",
   "Bendahara Umum: pembayaran LK-I dan verifikasi bukti pembayaran.",
-  "Bidang Kaderisasi: pendaftaran LK-I, screening, status peserta, materi.",
+  "Bidang Kaderisasi: pendaftaran LK-I, mentor bimbingan, screening, status peserta, materi.",
   "Bidang PTKP: laporan advokasi, follow up, status pengaduan.",
   "Bidang Media: berita, agenda, galeri, gagasan, pengumuman, banner.",
   "Editor: membuat draft konten tanpa kontrol publish.",
@@ -179,9 +185,14 @@ export const criticalWorkflows = [
     steps: "News -> create -> isi title/slug/excerpt/content -> status Published.",
   },
   {
+    title: "Kelola Mentor LK-I",
+    steps:
+      "Mentors -> create / edit -> isi nama, jabatan (Ketua DEMA/SEMA/HMJ), foto, bio bimbingan, dan link grup WhatsApp.",
+  },
+  {
     title: "Verifikasi LK-I",
     steps:
-      "LK1 Registrations -> buka peserta -> cek berkas/pembayaran -> update status dan admin note.",
+      "LK1 Registrations -> buka peserta -> cek mentor pilihan, berkas/pembayaran -> update status dan admin note.",
   },
   {
     title: "Update database kader",
