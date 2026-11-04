@@ -10,6 +10,7 @@ const navigation = [
   { label: "Sejarah Komisariat", href: "/profil/sejarah-komisariat" },
   { label: "Struktur Organisasi", href: "/profil/struktur-kepengurusan" },
   { label: "Database Kader", href: "/profil/database-kader" },
+  { label: "KAHMI Saintek", href: "/kahmi" },
   { label: "Galeri Kegiatan", href: "/galeri" },
 ];
 

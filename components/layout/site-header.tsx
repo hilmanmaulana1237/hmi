@@ -12,6 +12,7 @@ import {
   FileArchive,
   Fingerprint,
   GalleryHorizontal,
+  GraduationCap,
   Home,
   IdCard,
   Landmark,
@@ -36,6 +37,7 @@ const profileLinks = [
   { label: "Daftar Ketua Umum", href: "/profil/ketua-umum", icon: Trophy },
   { label: "Visi Misi", href: "/profil/visi-misi", icon: Lightbulb },
   { label: "Database Kader", href: "/profil/database-kader", icon: IdCard },
+  { label: "KAHMI Saintek", href: "/kahmi", icon: GraduationCap },
 ];
 
 const infoLinks = [

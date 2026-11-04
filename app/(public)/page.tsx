@@ -14,6 +14,7 @@ import { ArticleCard } from "@/components/cards/article-card";
 import { EventCard } from "@/components/cards/event-card";
 import { OpinionCard } from "@/components/cards/opinion-card";
 import { SectionHeading } from "@/components/sections/section-heading";
+import { KahmiLandingSection } from "@/components/sections/kahmi-landing-section";
 import {
   formatDate,
   getEvents,
@@ -323,6 +324,9 @@ export default async function Home() {
             </div>
           </div>
         </section>
+
+        {/* ── KAHMI Saintek ── */}
+        <KahmiLandingSection />
 
         {/* ── Advokasi ── */}
         <section className="bg-white py-20">

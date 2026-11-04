@@ -23,6 +23,7 @@
     "@payloadcms/storage-vercel-blob": "^3.85.1",
     "ai": "^6.0.204",
     "canvas-confetti": "^1.9.4",
+    "framer-motion": "^14.9.0",
     "graphql": "^16.14.2",
     "lucide-react": "^1.18.0",
     "mysql2": "^3.24.6",
