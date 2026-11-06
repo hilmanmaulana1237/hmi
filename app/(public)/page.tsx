@@ -56,7 +56,7 @@ export default async function Home() {
     "/background.jpeg"
   );
   const primaryCtaLabel = (hp?.primaryCtaLabel as string) || "Daftar LK-I";
-  const primaryCtaHref = (hp?.primaryCtaHref as string) || "https://pendaftaran-lk1-saintek.vercel.app/";
+  const primaryCtaHref = (hp?.primaryCtaHref as string) || "https://www.hmikomsaintek.my.id/kaderisasi/daftar-lk-1";
   const secondaryCtaLabel = (hp?.secondaryCtaLabel as string) || "Lihat Profil Komisariat";
   const secondaryCtaHref = (hp?.secondaryCtaHref as string) || "/profil";
 
@@ -291,9 +291,7 @@ export default async function Home() {
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="https://pendaftaran-lk1-saintek.vercel.app/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="/kaderisasi/daftar-lk-1"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-[#D6A84F] px-6 py-3 text-sm font-bold text-[#10231C]"
                 >
                   Mulai daftar

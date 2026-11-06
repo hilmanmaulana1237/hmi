@@ -1,8 +1,8 @@
 -- =====================================================================
 -- PostgreSQL Database Backup
--- Export Date: 2026-11-03T07:52:36.079Z
--- Server Version: PostgreSQL 18.6 (4e5fd08) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit
--- Target File: backup_database_20261103.sql
+-- Export Date: 2026-11-06T06:20:57.339Z
+-- Server Version: PostgreSQL 18.6 (ac70818) on aarch64-unknown-linux-gnu, compiled by gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, 64-bit
+-- Target File: backup_database_20261106.sql
 -- =====================================================================
 
 SET statement_timeout = 0;
@@ -220,6 +220,12 @@ CREATE SEQUENCE IF NOT EXISTS "public"."lk1_registrations_interest_fields_id_seq
   MAXVALUE 2147483647
   CACHE 1;
 CREATE SEQUENCE IF NOT EXISTS "public"."media_id_seq"
+  START WITH 1
+  INCREMENT BY 1
+  MINVALUE 1
+  MAXVALUE 2147483647
+  CACHE 1;
+CREATE SEQUENCE IF NOT EXISTS "public"."mentors_id_seq"
   START WITH 1
   INCREMENT BY 1
   MINVALUE 1
@@ -523,7 +529,17 @@ CREATE TABLE IF NOT EXISTS "public"."lk1_registrations" (
     "screening_result" character varying,
     "follow_up_note" character varying,
     "updated_at" timestamp(3) with time zone NOT NULL DEFAULT now(),
-    "created_at" timestamp(3) with time zone NOT NULL DEFAULT now()
+    "created_at" timestamp(3) with time zone NOT NULL DEFAULT now(),
+    "mentor_id" integer,
+    "mentor_name" character varying,
+    "mentor_role" character varying,
+    "mentor_whatsapp_group" character varying,
+    "photo_url" character varying,
+    "payment_proof_url" character varying,
+    "screening_score_btq" character varying,
+    "screening_score_hmi" character varying,
+    "screening_score_kebangsaan" character varying,
+    "screening_notes" character varying
 );
 
 CREATE TABLE IF NOT EXISTS "public"."lk1_registrations_interest_fields" (
@@ -548,6 +564,24 @@ CREATE TABLE IF NOT EXISTS "public"."media" (
     "height" numeric,
     "focal_x" numeric,
     "focal_y" numeric
+);
+
+CREATE TABLE IF NOT EXISTS "public"."mentors" (
+    "id" integer NOT NULL DEFAULT nextval('mentors_id_seq'::regclass),
+    "name" character varying NOT NULL,
+    "role" character varying NOT NULL,
+    "study_program" character varying,
+    "faculty" character varying DEFAULT 'Fakultas Sains dan Teknologi'::character varying,
+    "batch" character varying,
+    "avatar_url" character varying,
+    "bio" character varying,
+    "guidance_focus" character varying,
+    "whatsapp_group_url" character varying NOT NULL,
+    "whatsapp_number" character varying,
+    "is_active" boolean DEFAULT true,
+    "order" numeric DEFAULT 0,
+    "updated_at" timestamp(3) with time zone NOT NULL DEFAULT now(),
+    "created_at" timestamp(3) with time zone NOT NULL DEFAULT now()
 );
 
 CREATE TABLE IF NOT EXISTS "public"."navigation_items" (
@@ -666,7 +700,8 @@ CREATE TABLE IF NOT EXISTS "public"."payload_locked_documents_rels" (
     "programs_id" integer,
     "banners_id" integer,
     "contact_messages_id" integer,
-    "audit_logs_id" integer
+    "audit_logs_id" integer,
+    "mentors_id" integer
 );
 
 CREATE TABLE IF NOT EXISTS "public"."payload_migrations" (
@@ -731,7 +766,7 @@ CREATE TABLE IF NOT EXISTS "public"."site_settings" (
     "homepage_hero_subtitle" character varying,
     "homepage_hero_image_id" integer,
     "homepage_primary_cta_label" character varying DEFAULT 'Daftar LK-I'::character varying,
-    "homepage_primary_cta_href" character varying DEFAULT 'https://pendaftaran-lk1-saintek.vercel.app/'::character varying,
+    "homepage_primary_cta_href" character varying DEFAULT 'https://www.hmikomsaintek.my.id/kaderisasi/daftar-lk-1'::character varying,
     "homepage_secondary_cta_label" character varying DEFAULT 'Lihat Profil'::character varying,
     "homepage_secondary_cta_href" character varying DEFAULT '/profil'::character varying,
     "homepage_total_cadres" numeric,
@@ -842,6 +877,9 @@ ALTER TABLE ONLY "public"."lk1_registrations_interest_fields" ADD CONSTRAINT "lk
 ALTER TABLE ONLY "public"."media" DROP CONSTRAINT IF EXISTS "media_pkey";
 ALTER TABLE ONLY "public"."media" ADD CONSTRAINT "media_pkey" PRIMARY KEY (id);
 
+ALTER TABLE ONLY "public"."mentors" DROP CONSTRAINT IF EXISTS "mentors_pkey";
+ALTER TABLE ONLY "public"."mentors" ADD CONSTRAINT "mentors_pkey" PRIMARY KEY (id);
+
 ALTER TABLE ONLY "public"."navigation_items" DROP CONSTRAINT IF EXISTS "navigation_items_pkey";
 ALTER TABLE ONLY "public"."navigation_items" ADD CONSTRAINT "navigation_items_pkey" PRIMARY KEY (id);
 
@@ -938,6 +976,7 @@ CREATE INDEX IF NOT EXISTS gallery_created_at_idx ON gallery USING btree (create
 CREATE INDEX IF NOT EXISTS gallery_image_idx ON gallery USING btree (image_id);
 CREATE INDEX IF NOT EXISTS gallery_updated_at_idx ON gallery USING btree (updated_at);
 CREATE INDEX IF NOT EXISTS lk1_registrations_created_at_idx ON lk1_registrations USING btree (created_at);
+CREATE INDEX IF NOT EXISTS lk1_registrations_mentor_idx ON lk1_registrations USING btree (mentor_id);
 CREATE INDEX IF NOT EXISTS lk1_registrations_payment_proof_idx ON lk1_registrations USING btree (payment_proof_id);
 CREATE INDEX IF NOT EXISTS lk1_registrations_payment_verified_by_idx ON lk1_registrations USING btree (payment_verified_by_id);
 CREATE UNIQUE INDEX IF NOT EXISTS lk1_registrations_registration_code_idx ON lk1_registrations USING btree (registration_code);
@@ -948,6 +987,8 @@ CREATE INDEX IF NOT EXISTS lk1_registrations_interest_fields_parent_idx ON lk1_r
 CREATE INDEX IF NOT EXISTS media_created_at_idx ON media USING btree (created_at);
 CREATE UNIQUE INDEX IF NOT EXISTS media_filename_idx ON media USING btree (filename);
 CREATE INDEX IF NOT EXISTS media_updated_at_idx ON media USING btree (updated_at);
+CREATE INDEX IF NOT EXISTS mentors_created_at_idx ON mentors USING btree (created_at);
+CREATE INDEX IF NOT EXISTS mentors_updated_at_idx ON mentors USING btree (updated_at);
 CREATE INDEX IF NOT EXISTS navigation_items_created_at_idx ON navigation_items USING btree (created_at);
 CREATE INDEX IF NOT EXISTS navigation_items_updated_at_idx ON navigation_items USING btree (updated_at);
 CREATE INDEX IF NOT EXISTS news_author_idx ON news USING btree (author_id);
@@ -982,6 +1023,7 @@ CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_former_chairpersons_id_
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_gallery_id_idx ON payload_locked_documents_rels USING btree (gallery_id);
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_lk1_registrations_id_idx ON payload_locked_documents_rels USING btree (lk1_registrations_id);
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_media_id_idx ON payload_locked_documents_rels USING btree (media_id);
+CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_mentors_id_idx ON payload_locked_documents_rels USING btree (mentors_id);
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_navigation_items_id_idx ON payload_locked_documents_rels USING btree (navigation_items_id);
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_news_id_idx ON payload_locked_documents_rels USING btree (news_id);
 CREATE INDEX IF NOT EXISTS payload_locked_documents_rels_opinions_id_idx ON payload_locked_documents_rels USING btree (opinions_id);
@@ -1567,7 +1609,7 @@ INSERT INTO "public"."cadres" ("id", "full_name", "nickname", "gender", "univers
 
 -- Data for "public"."events" (5 rows)
 INSERT INTO "public"."events" ("id", "title", "slug", "excerpt", "description", "date", "start_time", "end_time", "location", "cover_image_id", "status", "registration_link", "is_published", "featured", "seo_title", "seo_description", "updated_at", "created_at") VALUES
-  (1, 'Latihan Kader I Gelombang Saintek', 'latihan-kader-i-gelombang-saintek', 'Basic Training LK-I untuk calon kader HMI Komisariat Sains dan Teknologi.', NULL, '2026-06-27T17:00:00.000Z', '08.00 WIB', '17.00 WIB', 'Kampus UIN Sunan Gunung Djati Bandung', NULL, 'upcoming', 'https://pendaftaran-lk1-saintek.vercel.app/', TRUE, FALSE, NULL, NULL, '2026-10-16T14:59:50.598Z', '2026-10-16T14:59:50.597Z'),
+  (1, 'Latihan Kader I Gelombang Saintek', 'latihan-kader-i-gelombang-saintek', 'Basic Training LK-I untuk calon kader HMI Komisariat Sains dan Teknologi.', NULL, '2026-06-27T17:00:00.000Z', '08.00 WIB', '17.00 WIB', 'Kampus UIN Sunan Gunung Djati Bandung', NULL, 'upcoming', 'https://www.hmikomsaintek.my.id/kaderisasi/daftar-lk-1', TRUE, FALSE, NULL, NULL, '2026-10-16T14:59:50.598Z', '2026-10-16T14:59:50.597Z'),
   (2, 'Kajian Konstitusi HMI', 'kajian-konstitusi-hmi', 'Kajian rutin untuk membaca Nilai Dasar Perjuangan dan pedoman organisasi.', NULL, '2026-06-27T17:00:00.000Z', '19.30 WIB', '21.30 WIB', 'Sekretariat Komisariat', NULL, 'upcoming', NULL, TRUE, FALSE, NULL, NULL, '2026-10-16T14:59:52.095Z', '2026-10-16T14:59:52.095Z'),
   (3, 'Kelas Media dan Publikasi Kader', 'kelas-media-dan-publikasi-kader', 'Pelatihan penulisan berita, dokumentasi, dan desain publikasi organisasi.', NULL, '2026-06-27T17:00:00.000Z', '16.00 WIB', '18.00 WIB', 'Ruang Diskusi Saintek', NULL, 'ongoing', NULL, TRUE, FALSE, NULL, NULL, '2026-10-16T14:59:53.786Z', '2026-10-16T14:59:53.786Z'),
   (4, 'Bakti Sosial dan Literasi Digital', 'bakti-sosial-literasi-digital', 'Pengabdian kader melalui edukasi literasi digital dan pendampingan masyarakat.', NULL, '2026-06-27T17:00:00.000Z', '09.00 WIB', '14.00 WIB', 'Kabupaten Bandung', NULL, 'done', NULL, TRUE, FALSE, NULL, NULL, '2026-10-16T14:59:55.575Z', '2026-10-16T14:59:55.575Z'),
@@ -1597,11 +1639,17 @@ Di tengah hidangan yang dibagi, terdapat percakapan yang menghubungkan gagasan, 
 
 Dari kebersamaan, Keluarga dirawat. Dari dialog, pemikiran dipertajam. Dan dari solidaritas, langkah perubahan menemukan pijakannya.', 'Kegiatan HMI', 5, NULL, '2026-10-18T12:00:00.000Z', TRUE, '2026-10-21T03:56:57.966Z', '2026-10-21T03:30:10.332Z');
 
--- Data for "public"."lk1_registrations" (0 rows)
+-- Data for "public"."lk1_registrations" (2 rows)
+INSERT INTO "public"."lk1_registrations" ("id", "registration_code", "full_name", "nickname", "gender", "birth_place", "birth_date", "whatsapp", "email", "address", "university", "faculty", "study_program", "semester", "nim", "class_name", "motivation", "organization_experience", "payment_proof_id", "payment_status", "payment_amount", "payment_method", "payment_verified_at", "payment_verified_by_id", "status", "admin_note", "submitted_at", "verified_by_id", "has_been_contacted", "screening_schedule", "screening_result", "follow_up_note", "updated_at", "created_at", "mentor_id", "mentor_name", "mentor_role", "mentor_whatsapp_group", "photo_url", "payment_proof_url", "screening_score_btq", "screening_score_hmi", "screening_score_kebangsaan", "screening_notes") VALUES
+  (1, 'LK1-2026-TGG5U9', 'Hilman Maulana', 'Fajar', 'Laki-laki', 'Banudng', '2026-11-18T00:00:00.000Z', '08728271218', 'satrianinja249@gmail.com', 'Hilman maulana', 'UIN Sunan Gunung Djati Bandung', 'Fakultas Sains dan Teknologi', 'Teknik Informatika', '1', '123123213', NULL, 'awdawdawddddddddddddddd', NULL, NULL, 'Belum Dicek', NULL, NULL, NULL, NULL, 'Pending', NULL, '2026-11-03T08:50:01.313Z', NULL, FALSE, NULL, NULL, NULL, '2026-11-03T08:50:01.320Z', '2026-11-03T08:50:01.319Z', NULL, 'Ahmad Fauzan Ramadhan', 'Ketua SEMA FST UIN SGD', 'https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01', NULL, NULL, NULL, NULL, NULL, NULL),
+  (2, 'LK1-2026-P40GCY', 'Hilman Maulana', 'gajklek', 'Perempuan', 'bandung', '2026-11-18T00:00:00.000Z', '57540084', 'admin@gamai.com', 'jwjwjwjaj', 'UIN Sunan Gunung Djati Bandung', 'Fakultas Sains dan Teknologi', 'Matematika', '1', 'bahahaq', NULL, 'haushajjajaqhhawabajjwjajawjjajqwhhwhw', NULL, NULL, 'Belum Dicek', NULL, NULL, NULL, NULL, 'Pending', NULL, '2026-11-05T11:57:29.566Z', NULL, FALSE, NULL, NULL, NULL, '2026-11-05T11:57:29.575Z', '2026-11-05T11:57:29.573Z', NULL, 'Hilman Maulana', 'Kepala Bidang Kastrad', 'https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01', NULL, NULL, NULL, NULL, NULL, NULL);
 
--- Data for "public"."lk1_registrations_interest_fields" (0 rows)
+-- Data for "public"."lk1_registrations_interest_fields" (2 rows)
+INSERT INTO "public"."lk1_registrations_interest_fields" ("order", "parent_id", "value", "id") VALUES
+  (1, 1, 'Media dan Komunikasi', 1),
+  (1, 2, 'PTKP', 2);
 
--- Data for "public"."media" (7 rows)
+-- Data for "public"."media" (9 rows)
 INSERT INTO "public"."media" ("id", "alt", "caption", "updated_at", "created_at", "url", "thumbnail_u_r_l", "filename", "mime_type", "filesize", "width", "height", "focal_x", "focal_y") VALUES
   (1, 'Hazmi', NULL, '2026-10-16T15:09:22.069Z', '2026-10-16T15:09:22.069Z', '/api/media/file/hazmi.png', NULL, 'hazmi.png', 'image/png', '1260579', '1080', '1350', '50', '50'),
   (2, 'Satria', NULL, '2026-10-16T15:53:47.194Z', '2026-10-16T15:53:47.194Z', '/api/media/file/WhatsApp%20Image%202026-10-16%20at%2022.50.53.jpeg', NULL, 'WhatsApp Image 2026-10-16 at 22.50.53.jpeg', 'image/jpeg', '669268', '1755', '2340', '50', '50'),
@@ -1609,7 +1657,13 @@ INSERT INTO "public"."media" ("id", "alt", "caption", "updated_at", "created_at"
   (4, 'Ngaliwet', NULL, '2026-10-21T03:54:05.209Z', '2026-10-21T03:30:01.446Z', '/api/media/file/ngaliwet.jpeg', NULL, 'ngaliwet.jpeg', 'image/jpeg', '233966', '1600', '1200', '50', '50'),
   (5, 'NgaliwetDay', NULL, '2026-10-21T03:56:53.807Z', '2026-10-21T03:56:53.806Z', '/api/media/file/ngaliwet-1.jpeg', NULL, 'ngaliwet-1.jpeg', 'image/jpeg', '233966', '1600', '1200', '50', '50'),
   (6, 'hilmanmaulana', NULL, '2026-10-21T04:03:25.969Z', '2026-10-21T04:03:25.969Z', '/api/media/file/121221.png', NULL, '121221.png', 'image/png', '301415', '655', '782', '50', '50'),
-  (7, 'header1', NULL, '2026-10-21T04:05:48.197Z', '2026-10-21T04:05:48.195Z', '/api/media/file/photo-1517048676732-d65bc937f952.avif', NULL, 'photo-1517048676732-d65bc937f952.avif', 'image/avif', '32336', '1170', '780', '50', '50');
+  (7, 'header1', NULL, '2026-10-21T04:05:48.197Z', '2026-10-21T04:05:48.195Z', '/api/media/file/photo-1517048676732-d65bc937f952.avif', NULL, 'photo-1517048676732-d65bc937f952.avif', 'image/avif', '32336', '1170', '780', '50', '50'),
+  (8, 'Foto Profil Mentor hazmi.png', NULL, '2026-11-03T13:33:32.210Z', '2026-11-03T13:33:32.209Z', '/api/media/file/mentor-hazmi-1793712810147-qenntz.png', NULL, 'mentor-hazmi-1793712810147-qenntz.png', 'image/png', '1260579', '1080', '1350', '50', '50'),
+  (9, 'Foto Profil Mentor instagram_local (3).png', NULL, '2026-11-04T00:48:51.063Z', '2026-11-04T00:48:51.062Z', '/api/media/file/mentor-instagram-local--3--1793753326597-g7d3th.png', NULL, 'mentor-instagram-local--3--1793753326597-g7d3th.png', 'image/png', '301415', '655', '782', '50', '50');
+
+-- Data for "public"."mentors" (1 rows)
+INSERT INTO "public"."mentors" ("id", "name", "role", "study_program", "faculty", "batch", "avatar_url", "bio", "guidance_focus", "whatsapp_group_url", "whatsapp_number", "is_active", "order", "updated_at", "created_at") VALUES
+  (1, 'Hilman Maulana', 'Kepala Bidang Kastrad', 'Teknik Informatika', 'Fakultas Sains dan Teknologi', 'Angkatan 2023', '/uploads/mentors/mentor-instagram-local--3--1793753326597-g7d3th.png', 'Saya merupakan mahasiswa Informatika yang memiliki ketertarikan di bidang pemrograman dan pengembangan aplikasi. Melalui bimbingan ini, saya ingin membantu adik tingkat belajar coding secara bertahap, memahami konsep dasar, dan membangun kemampuan problem solving agar lebih percaya diri dalam mengembangkan proyek secara mandiri.', 'Membimbing mahasiswa Informatika dalam memahami dasar-dasar pemrograman, mengembangkan kemampuan coding, serta membantu menyelesaikan permasalahan dan proyek pemrograman.', 'https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01', '087827718245', TRUE, '1', '2026-11-04T06:25:08.185Z', '2026-11-03T13:33:36.573Z');
 
 -- Data for "public"."navigation_items" (0 rows)
 
@@ -1655,7 +1709,7 @@ INSERT INTO "public"."organization_structure" ("id", "name", "position", "depart
 
 -- Data for "public"."payload_migrations" (1 rows)
 INSERT INTO "public"."payload_migrations" ("id", "name", "batch", "updated_at", "created_at") VALUES
-  (1, 'dev', '-1', '2026-10-21T03:49:22.070Z', '2026-10-16T14:59:34.306Z');
+  (1, 'dev', '-1', '2026-11-04T02:12:16.592Z', '2026-10-16T14:59:34.306Z');
 
 -- Data for "public"."payload_preferences" (10 rows)
 INSERT INTO "public"."payload_preferences" ("id", "key", "value", "updated_at", "created_at") VALUES
@@ -1691,7 +1745,7 @@ INSERT INTO "public"."payload_preferences_rels" ("id", "order", "parent_id", "pa
 
 -- Data for "public"."site_settings" (1 rows)
 INSERT INTO "public"."site_settings" ("id", "site_name", "site_description", "logo_id", "small_logo_id", "active_period", "organization_name", "branch_name", "university_name", "address", "email", "phone", "whatsapp", "instagram", "tiktok", "youtube", "google_maps_embed", "footer_description", "tagline", "homepage_hero_badge", "homepage_hero_title", "homepage_hero_subtitle", "homepage_hero_image_id", "homepage_primary_cta_label", "homepage_primary_cta_href", "homepage_secondary_cta_label", "homepage_secondary_cta_href", "homepage_total_cadres", "homepage_total_alumni", "homepage_total_agenda", "homepage_total_publications", "homepage_total_documents", "feature_toggles_show_news", "feature_toggles_show_agenda", "feature_toggles_show_opinions", "feature_toggles_show_gallery", "feature_toggles_show_advocacy", "feature_toggles_show_chat_widget", "feature_toggles_open_l_k1_registration", "updated_at", "created_at", "vision_mision_vision", "vision_mision_vision_description", "vision_mision_arah_gerak_quote", "vision_mision_arah_gerak_description", "vision_mision_tujuan_hmi") VALUES
-  (1, 'Rumah Digital HMI Komisariat Sains dan Teknologi', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', NULL, NULL, 'Periode 2025-2026', 'HMI Komisariat Sains dan Teknologi', 'Cabang Kabupaten Bandung', 'UIN Sunan Gunung Djati Bandung', 'Sekretariat HMI Komisariat Sains dan Teknologi, Bandung', 'komt.saintek@gmail.com', '+62 87-8277-18245', '6287827718245', '@hmisaintek.cakaba', NULL, NULL, NULL, 'Terbinanya insan akademis, pencipta, pengabdi yang bernafaskan Islam.', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', 'Official Website', 'HMI Komisariat Sains dan Teknologi', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', NULL, 'Daftar LK-I', 'https://pendaftaran-lk1-saintek.vercel.app/', 'Lihat Profil Komisariat', '/profil', '508', '180', '24', '96', '32', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2026-10-16T16:00:15.814Z', '2026-10-16T14:59:39.333Z', 'Terwujudnya HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung sebagai pusat kaderisasi yang unggul, progresif, dan berintegritas dalam mencetak insan akademis, pencipta, pengabdi yang bernafaskan Islam serta mampu mengintegrasikan nilai-nilai keislaman, keilmuan, dan teknologi untuk memberikan kontribusi nyata bagi kemajuan umat, bangsa, dan peradaban.', 'Visi tersebut menjadi landasan bagi seluruh aktivitas organisasi dalam membangun kader yang tidak hanya memiliki kemampuan akademik yang baik, tetapi juga memiliki karakter kepemimpinan, kemampuan berpikir kritis, semangat kolaborasi, serta kepedulian terhadap persoalan sosial dan kemasyarakatan.', '“Yakin Usaha Sampai (YAKUSA) menjadi motivasi pengabdian tiada henti, menyatukan keislaman, keilmuan, dan keorganisasian.”', 'Himpunan Mahasiswa Islam (HMI) Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung merupakan organisasi kader yang berkomitmen membentuk insan akademis, pencipta, pengabdi, dan muslim yang bernafaskan Islam serta bertanggung jawab atas terwujudnya masyarakat adil makmur yang diridhai Allah SWT.
+  (1, 'Rumah Digital HMI Komisariat Sains dan Teknologi', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', NULL, NULL, 'Periode 2025-2026', 'HMI Komisariat Sains dan Teknologi', 'Cabang Kabupaten Bandung', 'UIN Sunan Gunung Djati Bandung', 'Sekretariat HMI Komisariat Sains dan Teknologi, Bandung', 'komt.saintek@gmail.com', '+62 87-8277-18245', '6287827718245', '@hmisaintek.cakaba', NULL, NULL, NULL, 'Terbinanya insan akademis, pencipta, pengabdi yang bernafaskan Islam.', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', 'Official Website', 'HMI Komisariat Sains dan Teknologi', 'Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Komisariat Sains dan Teknologi.', NULL, 'Daftar LK-I', 'https://www.hmikomsaintek.my.id/kaderisasi/daftar-lk-1', 'Lihat Profil Komisariat', '/profil', '508', '180', '24', '96', '32', TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, '2026-10-16T16:00:15.814Z', '2026-10-16T14:59:39.333Z', 'Terwujudnya HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung sebagai pusat kaderisasi yang unggul, progresif, dan berintegritas dalam mencetak insan akademis, pencipta, pengabdi yang bernafaskan Islam serta mampu mengintegrasikan nilai-nilai keislaman, keilmuan, dan teknologi untuk memberikan kontribusi nyata bagi kemajuan umat, bangsa, dan peradaban.', 'Visi tersebut menjadi landasan bagi seluruh aktivitas organisasi dalam membangun kader yang tidak hanya memiliki kemampuan akademik yang baik, tetapi juga memiliki karakter kepemimpinan, kemampuan berpikir kritis, semangat kolaborasi, serta kepedulian terhadap persoalan sosial dan kemasyarakatan.', '“Yakin Usaha Sampai (YAKUSA) menjadi motivasi pengabdian tiada henti, menyatukan keislaman, keilmuan, dan keorganisasian.”', 'Himpunan Mahasiswa Islam (HMI) Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung merupakan organisasi kader yang berkomitmen membentuk insan akademis, pencipta, pengabdi, dan muslim yang bernafaskan Islam serta bertanggung jawab atas terwujudnya masyarakat adil makmur yang diridhai Allah SWT.
 
 Sebagai bagian dari lingkungan akademik yang berorientasi pada pengembangan ilmu pengetahuan dan teknologi, komisariat hadir untuk menjadi ruang pembelajaran, pengembangan karakter, dan penguatan kepemimpinan bagi seluruh kader. Setiap aktivitas yang dilaksanakan tidak hanya bertujuan meningkatkan kapasitas intelektual, tetapi juga menanamkan nilai-nilai keislaman, integritas, profesionalisme, dan semangat pengabdian kepada masyarakat.
 
@@ -1770,6 +1824,9 @@ ALTER TABLE ONLY "public"."former_chairpersons" ADD CONSTRAINT "former_chairpers
 ALTER TABLE ONLY "public"."gallery" DROP CONSTRAINT IF EXISTS "gallery_image_id_media_id_fk";
 ALTER TABLE ONLY "public"."gallery" ADD CONSTRAINT "gallery_image_id_media_id_fk" FOREIGN KEY (image_id) REFERENCES media(id) ON DELETE SET NULL;
 
+ALTER TABLE ONLY "public"."lk1_registrations" DROP CONSTRAINT IF EXISTS "lk1_registrations_mentor_id_mentors_id_fk";
+ALTER TABLE ONLY "public"."lk1_registrations" ADD CONSTRAINT "lk1_registrations_mentor_id_mentors_id_fk" FOREIGN KEY (mentor_id) REFERENCES mentors(id) ON DELETE SET NULL;
+
 ALTER TABLE ONLY "public"."lk1_registrations" DROP CONSTRAINT IF EXISTS "lk1_registrations_payment_proof_id_media_id_fk";
 ALTER TABLE ONLY "public"."lk1_registrations" ADD CONSTRAINT "lk1_registrations_payment_proof_id_media_id_fk" FOREIGN KEY (payment_proof_id) REFERENCES media(id) ON DELETE SET NULL;
 
@@ -1832,6 +1889,9 @@ ALTER TABLE ONLY "public"."payload_locked_documents_rels" ADD CONSTRAINT "payloa
 
 ALTER TABLE ONLY "public"."payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_media_fk";
 ALTER TABLE ONLY "public"."payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_media_fk" FOREIGN KEY (media_id) REFERENCES media(id) ON DELETE CASCADE;
+
+ALTER TABLE ONLY "public"."payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_mentors_fk";
+ALTER TABLE ONLY "public"."payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_mentors_fk" FOREIGN KEY (mentors_id) REFERENCES mentors(id) ON DELETE CASCADE;
 
 ALTER TABLE ONLY "public"."payload_locked_documents_rels" DROP CONSTRAINT IF EXISTS "payload_locked_documents_rels_navigation_items_fk";
 ALTER TABLE ONLY "public"."payload_locked_documents_rels" ADD CONSTRAINT "payload_locked_documents_rels_navigation_items_fk" FOREIGN KEY (navigation_items_id) REFERENCES navigation_items(id) ON DELETE CASCADE;
@@ -1902,9 +1962,10 @@ SELECT pg_catalog.setval('public."events_id_seq"', 5, true);
 SELECT pg_catalog.setval('public."events_rels_id_seq"', 1, false);
 SELECT pg_catalog.setval('public."former_chairpersons_id_seq"', 10, true);
 SELECT pg_catalog.setval('public."gallery_id_seq"', 14, true);
-SELECT pg_catalog.setval('public."lk1_registrations_id_seq"', 1, false);
-SELECT pg_catalog.setval('public."lk1_registrations_interest_fields_id_seq"', 1, false);
-SELECT pg_catalog.setval('public."media_id_seq"', 7, true);
+SELECT pg_catalog.setval('public."lk1_registrations_id_seq"', 2, true);
+SELECT pg_catalog.setval('public."lk1_registrations_interest_fields_id_seq"', 2, true);
+SELECT pg_catalog.setval('public."media_id_seq"', 9, true);
+SELECT pg_catalog.setval('public."mentors_id_seq"', 1, true);
 SELECT pg_catalog.setval('public."navigation_items_id_seq"', 1, false);
 SELECT pg_catalog.setval('public."news_id_seq"', 6, true);
 SELECT pg_catalog.setval('public."opinions_id_seq"', 7, true);

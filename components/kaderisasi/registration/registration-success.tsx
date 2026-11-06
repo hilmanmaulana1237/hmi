@@ -59,7 +59,7 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
   const handleJoinWhatsAppGroup = () => {
     const groupUrl =
       formData.mentorWhatsappGroup ||
-      "https://chat.whatsapp.com/L8oJqcIbNBq8Ipje6JM38u";
+      "https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01";
     window.open(groupUrl, "_blank");
   };
 
@@ -135,9 +135,8 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
         </div>
 
         <p className="mt-2.5 text-xs text-[#2D4A3E] leading-relaxed">
-          Silakan langsung masuk ke <strong>Grup WhatsApp Bimbingan</strong> bersama mentor pilihan Anda.
-          Di sini Anda dapat berdiskusi mengenai perkuliahan kampus, strategi kepemimpinan organisasi,
-          dan bimbingan materi screening LK-I.
+          Silakan langsung masuk ke <strong>Grup WhatsApp Calon Kader</strong> bersama mentor pilihan Anda dan panitia.
+          Di sini calon kader akan ditampung untuk update informasi bimbingan, perkuliahan, dan materi screening LK-I.
         </p>
 
         <button
@@ -146,7 +145,7 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-black text-white shadow-md shadow-[#25D366]/30 transition-all hover:bg-[#1EBE5D] hover:scale-[1.01] active:scale-95"
         >
           <MessageCircle className="h-5 w-5 shrink-0 fill-white stroke-[#25D366]" />
-          <span className="truncate">Gabung Grup WA Mentor ({formData.mentorName || "Bimbingan LK-I"})</span>
+          <span className="truncate">Gabung Grup WA Calon Kader ({formData.mentorName || "Bimbingan LK-I"})</span>
           <ExternalLink className="h-4 w-4 shrink-0" />
         </button>
       </div>
@@ -192,7 +191,7 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
               2
             </span>
             <span>
-              Pastikan Anda sudah bergabung di <strong>Grup WhatsApp Mentor</strong> untuk update jadwal bimbingan dan materi.
+              Pastikan Anda sudah bergabung di <strong>Grup WhatsApp Calon Kader</strong> untuk update jadwal bimbingan dan materi.
             </span>
           </li>
           <li className="flex items-start gap-2">

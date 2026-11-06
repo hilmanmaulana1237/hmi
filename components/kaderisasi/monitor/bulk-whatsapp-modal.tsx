@@ -36,7 +36,7 @@ export const BulkWhatsAppModal: React.FC<BulkWhatsAppModalProps> = ({
       return `Assalamu'alaikum Wr. Wb. Halo ${fullName},\n\nSelamat! Berkas pendaftaran LK-I Anda (*${regCode}*) telah kami verifikasi.\n\nJadwal Screening / Wawancara LK-I Anda:\n🗓 ${schedule ? new Date(schedule).toLocaleString("id-ID") : "[Jadwal segera diumumkan oleh panitia]"}\n\nMohon konfirmasi kehadiran Anda. Terima kasih!\n\n*Panitia LK-I HMI Saintek*`;
     }
     if (templateType === "kelulusan") {
-      return `Assalamu'alaikum Wr. Wb. Halo ${fullName},\n\nSelamat! Anda dinyatakan *DITERIMA* sebagai Peserta Latihan Kader I (LK-I) HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung.\n\nMentor Bimbingan Anda: *${mentorName || "Panitia Kaderisasi"}*\nSilakan bergabung ke Grup WhatsApp:\n👉 ${mentorWa || "https://chat.whatsapp.com/L8oJqcIbNBq8Ipje6JM38u"}\n\n*YAKUSA - Yakin Usaha Sampai!*`;
+      return `Assalamu'alaikum Wr. Wb. Halo ${fullName},\n\nSelamat! Anda dinyatakan *DITERIMA* sebagai Peserta Latihan Kader I (LK-I) HMI Komisariat Sains dan Teknologi UIN Sunan Gunung Djati Bandung.\n\nMentor Bimbingan Anda: *${mentorName || "Panitia Kaderisasi"}*\nSilakan bergabung ke Grup WhatsApp:\n👉 ${mentorWa || "https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01"}\n\n*YAKUSA - Yakin Usaha Sampai!*`;
     }
     return customMessage
       .replace(/{nama}/g, fullName)

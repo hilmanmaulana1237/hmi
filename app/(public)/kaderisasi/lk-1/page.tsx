@@ -76,9 +76,7 @@ export default async function Lk1Page() {
           </div>
           {isOpen ? (
             <Link
-              href="https://pendaftaran-lk1-saintek.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/kaderisasi/daftar-lk-1"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#F2994A] px-6 py-3 text-sm font-black text-[#003324]"
             >
               Daftar LK-I

@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
             heroTitle: "HMI Komisariat Sains dan Teknologi",
             heroSubtitle: "Ruang kolaborasi intelektual, kaderisasi, pengabdian, dan transformasi digital kader HMI Saintek.",
             primaryCtaLabel: "Daftar LK-I",
-            primaryCtaHref: "https://pendaftaran-lk1-saintek.vercel.app/",
+            primaryCtaHref: "https://www.hmikomsaintek.my.id/kaderisasi/daftar-lk-1",
             secondaryCtaLabel: "Lihat Profil Komisariat",
             secondaryCtaHref: "/profil",
             totalCadres: 420,

@@ -448,7 +448,7 @@ export const MentorFormModal: React.FC<MentorFormModalProps> = ({
                 type="url"
                 value={formData.whatsappGroupUrl}
                 onChange={(e) => setFormData({ ...formData, whatsappGroupUrl: e.target.value })}
-                placeholder="https://chat.whatsapp.com/L8oJqcIbNBq8Ipje6JM38u"
+                placeholder="https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01"
                 required
                 className="w-full rounded-xl border border-[#DCE8E2] bg-white px-3.5 py-2.5 text-xs sm:text-sm text-[#10231C] outline-none transition focus:border-[#006144] focus:ring-2 focus:ring-[#006144]/15"
               />
