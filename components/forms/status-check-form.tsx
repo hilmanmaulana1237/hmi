@@ -89,6 +89,29 @@ export function StatusCheckForm() {
 
           <p className="text-xs">Program Studi: <strong>{result.studyProgram}</strong></p>
 
+          {/* Grup Utama Calon Kader */}
+          <div className="mt-3 rounded-xl border-2 border-[#25D366] bg-[#F0FDF4] p-3.5 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-[#006144]">Grup WhatsApp Utama Calon Kader</span>
+              <span className="rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider text-white">
+                Wajib Masuk
+              </span>
+            </div>
+            <p className="mt-1 text-[11px] text-[#2D4A3E]">
+              Grup resmi seluruh calon kader LK-I untuk pengumuman jadwal screening dan arahan panitia.
+            </p>
+            <a
+              href="https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2 text-xs font-black text-white shadow-xs hover:bg-[#1EBE5D] transition-all"
+            >
+              <MessageCircle className="h-4 w-4 fill-white stroke-[#25D366]" />
+              <span>Gabung Grup Utama Calon Kader (Wajib)</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </div>
+
           {result.mentorName && (
             <div className="mt-3 rounded-xl border border-[#BCD7CA] bg-white p-3.5 text-xs">
               <div className="flex items-center gap-1.5 font-bold text-[#006144]">
@@ -105,9 +128,9 @@ export function StatusCheckForm() {
                   href={result.mentorWhatsappGroup}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2 text-xs font-black text-white shadow-xs hover:bg-[#1EBE5D] transition-all"
+                  className="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-[#006144] bg-[#F6F8F7] px-4 py-2 text-xs font-bold text-[#006144] hover:bg-[#EAF2EE] transition-all"
                 >
-                  <MessageCircle className="h-4 w-4 fill-white stroke-[#25D366]" />
+                  <Users className="h-4 w-4 text-[#006144]" />
                   <span>Buka Grup WhatsApp Mentor</span>
                   <ExternalLink className="h-3 w-3" />
                 </a>

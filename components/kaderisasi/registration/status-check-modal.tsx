@@ -213,36 +213,63 @@ export const StatusCheckModal: React.FC<StatusCheckModalProps> = ({
                 })()}
               </div>
 
-              {/* MENTOR HIGHLIGHT IN STATUS CHECK */}
-              <div className="mt-3 rounded-xl border border-[#BCD7CA] bg-white p-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-[#006144]" />
-                    <span className="text-[11px] font-bold text-[#4B6259]">
-                      Mentor Bimbingan:
+              {/* GRUP WA UTAMA & MENTOR HIGHLIGHT IN STATUS CHECK */}
+              <div className="mt-3 space-y-2">
+                {/* Grup Utama Calon Kader */}
+                <div className="rounded-xl border-2 border-[#25D366] bg-[#F0FDF4] p-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#006144]">
+                      Grup Resmi Seluruh Peserta
+                    </span>
+                    <span className="rounded-full bg-red-600 px-2 py-0.5 text-[9px] font-black text-white uppercase tracking-wider">
+                      Wajib Masuk
                     </span>
                   </div>
-                  {result.mentorRole && (
-                    <span className="text-[10px] font-bold text-[#006144] bg-[#EAF2EE] px-2 py-0.5 rounded">
-                      {result.mentorRole}
-                    </span>
-                  )}
-                </div>
-                <h5 className="mt-1 text-xs sm:text-sm font-black text-[#10231C]">
-                  {result.mentorName || "Panitia Kaderisasi"}
-                </h5>
-
-                {result.mentorWhatsappGroup && (
+                  <p className="mt-1 text-[11px] text-[#2D4A3E]">
+                    Grup induk calon kader LK-I untuk pengumuman jadwal, verifikasi berkas, dan info resmi panitia.
+                  </p>
                   <button
                     type="button"
-                    onClick={() => window.open(result.mentorWhatsappGroup, "_blank")}
-                    className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#25D366] px-3 py-2 text-xs font-bold text-white shadow-xs hover:bg-[#1EBE5D] transition-all"
+                    onClick={() => window.open("https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01", "_blank")}
+                    className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-[#25D366] px-3 py-2 text-xs font-black text-white shadow-xs hover:bg-[#1EBE5D] transition-all"
                   >
                     <MessageCircle className="h-3.5 w-3.5 fill-white stroke-[#25D366]" />
-                    <span>Buka Grup WhatsApp Mentor</span>
+                    <span>Gabung Grup Utama Calon Kader (Wajib)</span>
                     <ExternalLink className="h-3 w-3" />
                   </button>
-                )}
+                </div>
+
+                {/* Mentor Bimbingan */}
+                <div className="rounded-xl border border-[#BCD7CA] bg-white p-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-[#006144]" />
+                      <span className="text-[11px] font-bold text-[#4B6259]">
+                        Mentor Bimbingan:
+                      </span>
+                    </div>
+                    {result.mentorRole && (
+                      <span className="text-[10px] font-bold text-[#006144] bg-[#EAF2EE] px-2 py-0.5 rounded">
+                        {result.mentorRole}
+                      </span>
+                    )}
+                  </div>
+                  <h5 className="mt-1 text-xs sm:text-sm font-black text-[#10231C]">
+                    {result.mentorName || "Panitia Kaderisasi"}
+                  </h5>
+
+                  {result.mentorWhatsappGroup && (
+                    <button
+                      type="button"
+                      onClick={() => window.open(result.mentorWhatsappGroup, "_blank")}
+                      className="mt-2.5 inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-[#006144] bg-[#F6F8F7] px-3 py-2 text-xs font-bold text-[#006144] hover:bg-[#EAF2EE] transition-all"
+                    >
+                      <Users className="h-3.5 w-3.5 text-[#006144]" />
+                      <span>Buka Grup WhatsApp Mentor</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </button>
+                  )}
+                </div>
               </div>
 
               {/* Screening Schedule & Scores */}

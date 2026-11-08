@@ -17,6 +17,9 @@ import {
 import type { LK1FormData } from "./types";
 import { ParticipantCardModal } from "./participant-card-modal";
 
+const GENERAL_CANDIDATE_WA_GROUP_URL =
+  "https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01";
+
 interface RegistrationSuccessProps {
   registrationCode: string;
   formData: LK1FormData;
@@ -56,10 +59,15 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
     }
   };
 
-  const handleJoinWhatsAppGroup = () => {
+  const handleJoinGeneralGroup = () => {
+    window.open(GENERAL_CANDIDATE_WA_GROUP_URL, "_blank");
+  };
+
+  const handleJoinMentorGroup = () => {
     const groupUrl =
-      formData.mentorWhatsappGroup ||
-      "https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01";
+      formData.mentorWhatsappGroup && formData.mentorWhatsappGroup.trim()
+        ? formData.mentorWhatsappGroup
+        : GENERAL_CANDIDATE_WA_GROUP_URL;
     window.open(groupUrl, "_blank");
   };
 
@@ -110,44 +118,97 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
         )}
       </div>
 
-      {/* MENTOR HIGHLIGHT & WA GROUP JOIN CARD */}
-      <div className="mx-auto mt-6 max-w-xl rounded-2xl border-2 border-[#25D366] bg-gradient-to-br from-[#F0FDF4] via-white to-[#F6F8F7] p-5 shadow-xs">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-[#DCE8E2] pb-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#25D366] text-white">
-              <Users className="h-5 w-5" />
-            </div>
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#006144]">
-                Mentor Bimbingan Anda
-              </span>
-              <h4 className="text-sm sm:text-base font-black text-[#10231C]">
-                {formData.mentorName || "Mentor Kaderisasi LK-I"}
-              </h4>
-            </div>
-          </div>
-
-          {formData.mentorRole && (
-            <span className="inline-block self-start sm:self-auto rounded-full bg-[#006144] px-3 py-1 text-[11px] font-bold text-white">
-              {formData.mentorRole}
-            </span>
-          )}
+      {/* ── DUA GRUP WHATSAPP: GRUP UTAMA (WAJIB) & GRUP MENTOR ── */}
+      <div className="mx-auto mt-6 max-w-xl space-y-4">
+        {/* Banner Instruksi Wajib */}
+        <div className="flex items-start gap-2.5 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-xs text-amber-900 shadow-xs">
+          <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-600 text-[11px] font-black text-white mt-0.5">
+            !
+          </span>
+          <p className="font-semibold leading-relaxed">
+            <strong>Instruksi Penting:</strong> Calon kader <strong className="text-red-700 underline uppercase">wajib masuk ke Grup WhatsApp Utama</strong> untuk informasi verifikasi dan jadwal screening, serta masuk ke <strong>Grup Bimbingan Mentor</strong> untuk persiapan materi.
+          </p>
         </div>
 
-        <p className="mt-2.5 text-xs text-[#2D4A3E] leading-relaxed">
-          Silakan langsung masuk ke <strong>Grup WhatsApp Calon Kader</strong> bersama mentor pilihan Anda dan panitia.
-          Di sini calon kader akan ditampung untuk update informasi bimbingan, perkuliahan, dan materi screening LK-I.
-        </p>
+        {/* 1. GRUP UTAMA CALON KADER (WAJIB MASUK) */}
+        <div className="relative overflow-hidden rounded-2xl border-2 border-[#25D366] bg-gradient-to-br from-[#F0FDF4] via-white to-[#EAF8F0] p-5 shadow-xs transition-all hover:shadow-md">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#DCE8E2] pb-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-md shadow-[#25D366]/30">
+                <MessageCircle className="h-5 w-5 fill-white stroke-[#25D366]" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-[#006144]">
+                  Grup Resmi Seluruh Calon Peserta
+                </span>
+                <h4 className="text-sm sm:text-base font-black text-[#10231C]">
+                  Grup WhatsApp Utama Calon Kader LK-I
+                </h4>
+              </div>
+            </div>
 
-        <button
-          type="button"
-          onClick={handleJoinWhatsAppGroup}
-          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3 text-sm font-black text-white shadow-md shadow-[#25D366]/30 transition-all hover:bg-[#1EBE5D] hover:scale-[1.01] active:scale-95"
-        >
-          <MessageCircle className="h-5 w-5 shrink-0 fill-white stroke-[#25D366]" />
-          <span className="truncate">Gabung Grup WA Calon Kader ({formData.mentorName || "Bimbingan LK-I"})</span>
-          <ExternalLink className="h-4 w-4 shrink-0" />
-        </button>
+            <span className="inline-flex self-start sm:self-auto items-center gap-1 rounded-full bg-red-600 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-white shadow-xs">
+              ★ Wajib Masuk
+            </span>
+          </div>
+
+          <p className="mt-3 text-xs text-[#2D4A3E] leading-relaxed">
+            Wadah induk penampungan seluruh calon kader LK-I HMI Komisariat Sains & Teknologi.
+            Pengumuman kelengkapan berkas, pembagian jadwal screening wawancara, timeline kegiatan, dan arahan panitia disampaikan terpusat di sini.
+          </p>
+
+          <button
+            type="button"
+            onClick={handleJoinGeneralGroup}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#25D366] px-5 py-3.5 text-sm font-black text-white shadow-md shadow-[#25D366]/30 transition-all hover:bg-[#1EBE5D] hover:scale-[1.01] active:scale-95"
+          >
+            <MessageCircle className="h-5 w-5 shrink-0 fill-white stroke-[#25D366]" />
+            <span>1. Gabung Grup Utama Calon Kader (Wajib)</span>
+            <ExternalLink className="h-4 w-4 shrink-0" />
+          </button>
+        </div>
+
+        {/* 2. GRUP MENTOR BIMBINGAN */}
+        <div className="rounded-2xl border-2 border-[#BCD7CA] bg-white p-5 shadow-xs transition-all hover:border-[#006144]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#DCE8E2] pb-3">
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#006144] text-white">
+                <Users className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#006144]">
+                  Mentor Bimbingan Anda
+                </span>
+                <h4 className="text-sm sm:text-base font-black text-[#10231C]">
+                  {formData.mentorName || "Mentor Kaderisasi LK-I"}
+                </h4>
+              </div>
+            </div>
+
+            {formData.mentorRole && (
+              <span className="inline-block self-start sm:self-auto rounded-full bg-[#EAF2EE] px-3 py-1 text-[11px] font-bold text-[#006144]">
+                {formData.mentorRole}
+              </span>
+            )}
+          </div>
+
+          <p className="mt-3 text-xs text-[#4B6259] leading-relaxed">
+            Grup bimbingan intensif bersama <strong>{formData.mentorName || "Mentor Pilihan"}</strong> untuk
+            diskusi akademik, wawasan organisasi, serta pembekalan materi screening LK-I (BTQ, Ke-HMI-an, Keislaman & Keindonesiaan).
+          </p>
+
+          <button
+            type="button"
+            onClick={handleJoinMentorGroup}
+            className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-2xl border-2 border-[#006144] bg-[#F6F8F7] px-5 py-3 text-sm font-black text-[#006144] transition-all hover:bg-[#EAF2EE] active:scale-95"
+          >
+            <Users className="h-4 w-4 shrink-0 text-[#006144]" />
+            <span className="truncate">
+              2. Gabung Grup Bimbingan Mentor ({formData.mentorName || "Bimbingan LK-I"})
+            </span>
+            <ExternalLink className="h-4 w-4 shrink-0" />
+          </button>
+        </div>
       </div>
 
       {/* Primary Action Buttons (Cetak Kartu & Pantau Status) */}
@@ -191,7 +252,7 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
               2
             </span>
             <span>
-              Pastikan Anda sudah bergabung di <strong>Grup WhatsApp Calon Kader</strong> untuk update jadwal bimbingan dan materi.
+              <strong>WAJIB:</strong> Pastikan Anda sudah bergabung di <strong>Grup WhatsApp Utama Calon Kader</strong> serta <strong>Grup Bimbingan Mentor</strong> ({formData.mentorName || "Mentor Pilihan"}) untuk update jadwal screening dan pembekalan materi.
             </span>
           </li>
           <li className="flex items-start gap-2">
