@@ -15,6 +15,7 @@ export interface LK1FormData {
   university: string;
   faculty: string;
   studyProgram: string;
+  customStudyProgram?: string;
   semester: string;
   nim: string;
   className: string;
@@ -33,6 +34,8 @@ export interface LK1FormData {
   // Step 5: Berkas & Dokumen
   paymentProofUrl: string;
   photoUrl: string;
+  igProofConfirmed: boolean;
+  igProofDriveUrl?: string;
 
   // Step 6: Konfirmasi
   consent: boolean;

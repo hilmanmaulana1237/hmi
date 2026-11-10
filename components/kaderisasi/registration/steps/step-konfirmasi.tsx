@@ -11,8 +11,31 @@ import {
   ShieldCheck,
   ExternalLink,
   MessageCircle,
+  AlertTriangle,
+  FolderPlus,
 } from "lucide-react";
 import type { LK1FormData } from "../types";
+
+export const IG_PROOF_DRIVE_FOLDER =
+  "https://drive.google.com/drive/folders/1pq0Uu3uMlohPPrkyCEHN4rmMk38bNVF-?usp=sharing";
+
+function InstagramIcon({ className = "h-4 w-4" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
 
 interface StepKonfirmasiProps {
   formData: LK1FormData;
@@ -106,7 +129,12 @@ export const StepKonfirmasi: React.FC<StepKonfirmasiProps> = ({
             </div>
             <div>
               <span className="text-[11px] text-[#4B6259]">Program Studi:</span>
-              <p className="font-bold text-[#10231C]">{formData.studyProgram || "-"}</p>
+              <p className="font-bold text-[#10231C]">
+                {formData.studyProgram || "-"}
+                {formData.studyProgram === "Lainnya / Luar Saintek" && formData.customStudyProgram
+                  ? ` (${formData.customStudyProgram})`
+                  : ""}
+              </p>
             </div>
             <div>
               <span className="text-[11px] text-[#4B6259]">NIM:</span>
@@ -119,6 +147,33 @@ export const StepKonfirmasi: React.FC<StepKonfirmasiProps> = ({
               </p>
             </div>
           </div>
+
+          {/* Callout khusus untuk Luar Saintek */}
+          {formData.studyProgram === "Lainnya / Luar Saintek" && (
+            <div className="mt-3 rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-amber-900">
+              <div className="flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 shrink-0 text-amber-600 mt-0.5" />
+                <div className="space-y-1.5 flex-1">
+                  <p className="font-bold text-amber-950">
+                    Konfirmasi Wajib Peserta Luar Saintek:
+                  </p>
+                  <p className="text-[11px] leading-relaxed text-amber-800">
+                    Karena Anda memilih jurusan di luar Saintek, pastikan Anda telah melakukan konfirmasi via WhatsApp ke kontak panitia di <strong>+62 812-8241-0724</strong>.
+                  </p>
+                  <a
+                    href="https://wa.me/6281282410724?text=Assalamu%27alaikum%20Wr.%20Wb.%20Halo%20Panitia%20LK-1%20HMI%20Saintek%2C%20saya%20calon%20peserta%20dari%20Luar%20Saintek%20ingin%20mengonfirmasi%20pendaftaran%20LK-I."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-lg bg-[#25D366] px-3 py-1.5 text-[11px] font-bold text-white shadow-2xs hover:bg-[#1EBE5D] transition-all"
+                  >
+                    <MessageCircle className="h-3.5 w-3.5 fill-white stroke-[#25D366]" />
+                    <span>Chat WhatsApp Panitia (+62 812-8241-0724)</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Section 3: Motivasi */}
@@ -245,6 +300,112 @@ export const StepKonfirmasi: React.FC<StepKonfirmasiProps> = ({
                 <span className="text-[#4B6259]">Menyusul saat screening</span>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Section 6: Bukti Follow Instagram (IG Saintek Cakaba, IG LK 1, IG KOHATI) */}
+        <div className="rounded-2xl border-2 border-[#BCD7CA] bg-gradient-to-br from-[#F4F9F6] to-white p-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#DCE8E2] pb-2.5">
+            <div className="flex items-center gap-2">
+              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-[#E1306C] via-[#FD1D1D] to-[#F77737] text-white">
+                <InstagramIcon className="h-4 w-4" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-wider text-red-600 block">
+                  Wajib Diunggah ke Drive
+                </span>
+                <h4 className="text-xs sm:text-sm font-black text-[#10231C]">
+                  Bukti Follow Instagram Panitia & Kaderisasi
+                </h4>
+              </div>
+            </div>
+
+            <a
+              href={IG_PROOF_DRIVE_FOLDER}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 self-start sm:self-auto rounded-full bg-[#006144] px-3.5 py-1.5 text-[11px] font-bold text-white hover:bg-[#003324] transition-all shadow-2xs"
+            >
+              <span>Buka Google Drive Panitia</span>
+              <ExternalLink className="h-3 w-3" />
+            </a>
+          </div>
+
+          <div className="mt-2.5 text-xs text-[#4B6259] space-y-2">
+            <p className="font-semibold text-[#10231C] text-[11px]">
+              Pastikan Anda telah mem-follow 3 akun Instagram di bawah:
+            </p>
+            <div className="grid gap-1.5 text-[11px] sm:grid-cols-3">
+              <a
+                href="https://www.instagram.com/hmisaintek.cakaba/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-white p-2 border border-[#DCE8E2] shadow-2xs hover:border-[#006144] transition-all flex items-center justify-between"
+              >
+                <div>
+                  <strong className="text-[#006144] block">1. IG Saintek Cakaba</strong>
+                  <span className="text-[10px] text-gray-600">@hmisaintek.cakaba</span>
+                </div>
+                <ExternalLink className="h-3 w-3 text-gray-400" />
+              </a>
+              <a
+                href="https://www.instagram.com/lk1hmikom.saintek/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-white p-2 border border-[#DCE8E2] shadow-2xs hover:border-[#006144] transition-all flex items-center justify-between"
+              >
+                <div>
+                  <strong className="text-[#006144] block">2. IG LK 1</strong>
+                  <span className="text-[10px] text-gray-600">@lk1hmikom.saintek</span>
+                </div>
+                <ExternalLink className="h-3 w-3 text-gray-400" />
+              </a>
+              <a
+                href="https://www.instagram.com/kohatikom_saintek/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg bg-white p-2 border border-[#DCE8E2] shadow-2xs hover:border-[#006144] transition-all flex items-center justify-between"
+              >
+                <div>
+                  <strong className="text-[#006144] block">3. IG KOHATI</strong>
+                  <span className="text-[10px] text-gray-600">@kohatikom_saintek</span>
+                </div>
+                <ExternalLink className="h-3 w-3 text-gray-400" />
+              </a>
+            </div>
+
+            <div className="rounded-xl border border-amber-300 bg-amber-50/80 p-2.5 text-[11px] text-amber-950 flex items-start gap-2">
+              <FolderPlus className="h-4 w-4 text-amber-700 shrink-0 mt-0.5" />
+              <div>
+                <span className="font-bold">Format Folder di Google Drive:</span>{" "}
+                <code className="bg-white/80 px-1 py-0.5 rounded border border-amber-200 font-mono font-bold">
+                  {formData.fullName || "Nama Peserta"} - {formData.studyProgram || "Jurusan"}
+                </code>
+                <p className="mt-0.5 text-amber-800 text-[10px]">
+                  3 file screenshot bukti follow wajib diunggah ke dalam folder dengan format di atas.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Checkbox konfirmasi upload di Step Konfirmasi */}
+          <div className="mt-3.5 pt-3 border-t border-[#DCE8E2]">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.igProofConfirmed}
+                onChange={(e) => updateField("igProofConfirmed", e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-[#006144] text-[#006144] focus:ring-[#006144]"
+              />
+              <span className="text-xs font-semibold text-[#10231C] leading-snug">
+                Saya telah mem-follow ketiga akun Instagram di atas, membuat folder dengan format <strong>Nama - Jurusan</strong> di Google Drive panitia, dan mengunggah 3 screenshot bukti follow ke dalamnya.
+              </span>
+            </label>
+            {errors.igProofConfirmed && (
+              <p className="mt-1.5 text-[11px] font-bold text-red-600">
+                ⚠️ {errors.igProofConfirmed}
+              </p>
+            )}
           </div>
         </div>
 

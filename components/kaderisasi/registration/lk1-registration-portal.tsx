@@ -137,7 +137,18 @@ export const LK1RegistrationPortal: React.FC<LK1RegistrationPortalProps> = ({
       }
     }
 
+    if (currentStep === 4) {
+      if (!formData.igProofConfirmed) {
+        newErrors.igProofConfirmed =
+          "Wajib konfirmasi bahwa Anda telah mem-follow 3 akun IG dan mengunggah screenshot bukti follow ke folder Google Drive panitia (format: Nama - Jurusan).";
+      }
+    }
+
     if (currentStep === 5) {
+      if (!formData.igProofConfirmed) {
+        newErrors.igProofConfirmed =
+          "Wajib konfirmasi bahwa Anda telah mem-follow 3 akun IG dan mengunggah screenshot bukti follow ke folder Google Drive panitia (format: Nama - Jurusan).";
+      }
       if (!formData.consent) {
         newErrors.consent = "Anda wajib mencentang persetujuan pernyataan di atas.";
       }
@@ -182,6 +193,11 @@ export const LK1RegistrationPortal: React.FC<LK1RegistrationPortalProps> = ({
     setSubmitError(null);
 
     try {
+      const resolvedStudyProgram =
+        formData.studyProgram === "Lainnya / Luar Saintek" && formData.customStudyProgram?.trim()
+          ? `Lainnya / Luar Saintek (${formData.customStudyProgram.trim()})`
+          : formData.studyProgram.trim();
+
       const payload = {
         fullName: formData.fullName.trim(),
         nickname: formData.nickname.trim() || undefined,
@@ -193,7 +209,7 @@ export const LK1RegistrationPortal: React.FC<LK1RegistrationPortalProps> = ({
         address: formData.address.trim() || undefined,
         university: formData.university.trim(),
         faculty: formData.faculty.trim() || undefined,
-        studyProgram: formData.studyProgram.trim(),
+        studyProgram: resolvedStudyProgram,
         semester: formData.semester ? parseInt(formData.semester, 10) : 1,
         nim: formData.nim.trim(),
         className: formData.className.trim() || undefined,

@@ -13,12 +13,16 @@ import {
   Users,
   MessageCircle,
   ExternalLink,
+  AlertTriangle,
 } from "lucide-react";
 import type { LK1FormData } from "./types";
 import { ParticipantCardModal } from "./participant-card-modal";
 
 const GENERAL_CANDIDATE_WA_GROUP_URL =
   "https://chat.whatsapp.com/EaDcUHFcNud8Dr2yOu4D01";
+
+const IG_PROOF_DRIVE_FOLDER =
+  "https://drive.google.com/drive/folders/1pq0Uu3uMlohPPrkyCEHN4rmMk38bNVF-?usp=sharing";
 
 interface RegistrationSuccessProps {
   registrationCode: string;
@@ -120,6 +124,39 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
 
       {/* ── DUA GRUP WHATSAPP: GRUP UTAMA (WAJIB) & GRUP MENTOR ── */}
       <div className="mx-auto mt-6 max-w-xl space-y-4">
+        {/* Banner Khusus Calon Peserta Luar Saintek */}
+        {formData.studyProgram?.includes("Luar Saintek") && (
+          <div className="rounded-2xl border-2 border-amber-400 bg-amber-50 p-4 text-xs text-amber-950 shadow-xs animate-fade-in">
+            <div className="flex items-start gap-2.5">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-amber-600 text-white shadow-xs mt-0.5">
+                <AlertTriangle className="h-4 w-4" />
+              </div>
+              <div className="space-y-2 flex-1">
+                <div>
+                  <h4 className="font-black text-amber-950 text-sm">
+                    Pemberitahuan Calon Peserta Luar Saintek (Wajib Konfirmasi)
+                  </h4>
+                  <p className="mt-1 leading-relaxed text-amber-800 text-[11px] sm:text-xs">
+                    Karena Anda mendaftar dari jurusan / fakultas di luar Fakultas Sains dan Teknologi, Anda <strong>wajib melakukan konfirmasi pendaftaran</strong> langsung ke nomor WhatsApp panitia: <strong className="underline text-emerald-800">+62 812-8241-0724</strong>.
+                  </p>
+                </div>
+                <a
+                  href={`https://wa.me/6281282410724?text=${encodeURIComponent(
+                    `Assalamu'alaikum Wr. Wb. Halo Panitia LK-1 HMI Saintek, saya calon peserta dari Luar Saintek:\n\nNama: ${formData.fullName}\nNIM: ${formData.nim}\nProgram Studi: ${formData.studyProgram}\nKode Pendaftaran: ${registrationCode}\n\nIngin mengonfirmasi pendaftaran LK-I.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-xs font-black text-white shadow-xs hover:bg-[#1EBE5D] transition-all active:scale-95"
+                >
+                  <MessageCircle className="h-4 w-4 fill-white stroke-[#25D366]" />
+                  <span>Konfirmasi ke WhatsApp Panitia (+62 812-8241-0724)</span>
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Banner Instruksi Wajib */}
         <div className="flex items-start gap-2.5 rounded-2xl border border-amber-300 bg-amber-50 p-4 text-xs text-amber-900 shadow-xs">
           <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-amber-600 text-[11px] font-black text-white mt-0.5">
@@ -262,6 +299,56 @@ export const RegistrationSuccess: React.FC<RegistrationSuccessProps> = ({
             <span>
               Panitia akan menghubungi nomor WhatsApp <strong>{formData.whatsapp}</strong> untuk jadwal screening.
             </span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#006144] text-[11px] font-bold text-white">
+              4
+            </span>
+            <div className="space-y-1">
+              <span>
+                <strong>Bukti Follow Instagram:</strong> Pastikan Anda telah mem-follow akun{" "}
+                <a
+                  href="https://www.instagram.com/hmisaintek.cakaba/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[#006144] underline"
+                >
+                  @hmisaintek.cakaba
+                </a>
+                ,{" "}
+                <a
+                  href="https://www.instagram.com/lk1hmikom.saintek/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[#006144] underline"
+                >
+                  @lk1hmikom.saintek
+                </a>
+                , dan{" "}
+                <a
+                  href="https://www.instagram.com/kohatikom_saintek/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[#006144] underline"
+                >
+                  @kohatikom_saintek
+                </a>
+                .
+              </span>
+              <p className="text-[11px] text-[#4B6259]">
+                Buat folder dengan format <strong>{formData.fullName || "Nama"} - {formData.studyProgram || "Jurusan"}</strong> di{" "}
+                <a
+                  href={IG_PROOF_DRIVE_FOLDER}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold text-[#006144] underline inline-flex items-center gap-0.5"
+                >
+                  Folder Google Drive Panitia
+                  <ExternalLink className="h-3 w-3 inline" />
+                </a>
+                , lalu unggah 3 screenshot bukti follow ke dalamnya.
+              </p>
+            </div>
           </li>
         </ul>
       </div>

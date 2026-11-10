@@ -18,6 +18,7 @@ export const initialFormData: LK1FormData = {
   university: "UIN Sunan Gunung Djati Bandung",
   faculty: "Fakultas Sains dan Teknologi",
   studyProgram: "",
+  customStudyProgram: "",
   semester: "1",
   nim: "",
   className: "",
@@ -30,6 +31,8 @@ export const initialFormData: LK1FormData = {
   mentorWhatsappGroup: "",
   paymentProofUrl: "",
   photoUrl: "",
+  igProofConfirmed: false,
+  igProofDriveUrl: "",
   consent: false,
 };
 
@@ -45,7 +48,7 @@ export function useFormCache() {
 
       if (cached) {
         const parsed = JSON.parse(cached);
-        setFormData((prev) => ({ ...prev, ...parsed }));
+        setFormData((prev) => ({ ...initialFormData, ...prev, ...parsed }));
       }
 
       if (savedStep) {
