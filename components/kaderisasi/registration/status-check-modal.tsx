@@ -290,29 +290,55 @@ export const StatusCheckModal: React.FC<StatusCheckModalProps> = ({
                 </div>
               )}
 
-              {/* Screening Scores */}
-              {(result.screeningScoreBtq || result.screeningScoreHmi || result.screeningScoreKebangsaan) && (
+              {/* Screening Scores (5 Materi Screening) */}
+              {(result.screeningScoreHmi ||
+                result.screeningScorePtkp ||
+                result.screeningScoreBtq ||
+                result.screeningScoreKmo ||
+                result.screeningScoreStadiumGeneral ||
+                result.screeningScoreKebangsaan) && (
                 <div className="mt-3 rounded-xl border border-[#DCE8E2] bg-white p-3 text-xs">
-                  <span className="font-bold text-[#006144] block mb-1.5">
+                  <span className="font-bold text-[#006144] block mb-2">
                     Hasil Penilaian Screening:
                   </span>
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    <div className="rounded-lg bg-[#F6F8F7] p-2">
-                      <span className="text-[10px] text-[#4B6259] block">BTQ</span>
-                      <span className="font-black text-sm text-[#10231C]">
-                        {result.screeningScoreBtq || "-"}
-                      </span>
-                    </div>
-                    <div className="rounded-lg bg-[#F6F8F7] p-2">
-                      <span className="text-[10px] text-[#4B6259] block">Ke-HMI-an</span>
-                      <span className="font-black text-sm text-[#10231C]">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 text-center">
+                    {/* 1. Ke-HMI-an */}
+                    <div className="rounded-lg bg-[#F6F8F7] p-2 border border-[#EAF2EE]">
+                      <span className="text-[10px] font-bold text-[#4B6259] block truncate">1. Ke-HMI-an</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144] block mt-0.5">
                         {result.screeningScoreHmi || "-"}
                       </span>
                     </div>
-                    <div className="rounded-lg bg-[#F6F8F7] p-2">
-                      <span className="text-[10px] text-[#4B6259] block">Kebangsaan</span>
-                      <span className="font-black text-sm text-[#10231C]">
-                        {result.screeningScoreKebangsaan || "-"}
+
+                    {/* 2. PTKP */}
+                    <div className="rounded-lg bg-[#F6F8F7] p-2 border border-[#EAF2EE]">
+                      <span className="text-[10px] font-bold text-[#4B6259] block truncate">2. PTKP</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144] block mt-0.5">
+                        {result.screeningScorePtkp || "-"}
+                      </span>
+                    </div>
+
+                    {/* 3. BTQ */}
+                    <div className="rounded-lg bg-[#F6F8F7] p-2 border border-[#EAF2EE]">
+                      <span className="text-[10px] font-bold text-[#4B6259] block truncate">3. BTQ</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144] block mt-0.5">
+                        {result.screeningScoreBtq || "-"}
+                      </span>
+                    </div>
+
+                    {/* 4. KMO */}
+                    <div className="rounded-lg bg-[#F6F8F7] p-2 border border-[#EAF2EE]">
+                      <span className="text-[10px] font-bold text-[#4B6259] block truncate">4. KMO</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144] block mt-0.5">
+                        {result.screeningScoreKmo || "-"}
+                      </span>
+                    </div>
+
+                    {/* 5. Stadium General */}
+                    <div className="rounded-lg bg-[#F6F8F7] p-2 border border-[#EAF2EE] col-span-2 sm:col-span-1">
+                      <span className="text-[10px] font-bold text-[#4B6259] block truncate">5. Stadium General</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144] block mt-0.5">
+                        {result.screeningScoreStadiumGeneral || "-"}
                       </span>
                     </div>
                   </div>

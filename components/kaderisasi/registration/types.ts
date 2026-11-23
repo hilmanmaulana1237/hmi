@@ -71,8 +71,11 @@ export interface StoredLK1Registration {
   paymentStatus?: string;
   screeningSchedule?: string;
   screeningResult?: string;
-  screeningScoreBtq?: string;
   screeningScoreHmi?: string;
+  screeningScorePtkp?: string;
+  screeningScoreBtq?: string;
+  screeningScoreKmo?: string;
+  screeningScoreStadiumGeneral?: string;
   screeningScoreKebangsaan?: string;
   screeningNotes?: string;
   adminNote?: string;

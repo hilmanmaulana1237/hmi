@@ -26,10 +26,12 @@ export const ScreeningModal: React.FC<ScreeningModalProps> = ({
   if (!candidate) return null;
 
   const [schedule, setSchedule] = useState(candidate.screening_schedule || "");
-  const [scoreBtq, setScoreBtq] = useState(candidate.screening_score_btq || "B (Baik)");
   const [scoreHmi, setScoreHmi] = useState(candidate.screening_score_hmi || "B (Baik)");
-  const [scoreKebangsaan, setScoreKebangsaan] = useState(
-    candidate.screening_score_kebangsaan || "B (Baik)"
+  const [scorePtkp, setScorePtkp] = useState(candidate.screening_score_ptkp || "B (Baik)");
+  const [scoreBtq, setScoreBtq] = useState(candidate.screening_score_btq || "B (Baik)");
+  const [scoreKmo, setScoreKmo] = useState(candidate.screening_score_kmo || "B (Baik)");
+  const [scoreStadiumGeneral, setScoreStadiumGeneral] = useState(
+    candidate.screening_score_stadium_general || "B (Baik)"
   );
   const [result, setResult] = useState(candidate.screening_result || "Lulus Murni");
   const [notes, setNotes] = useState(candidate.screening_notes || "");
@@ -42,9 +44,11 @@ export const ScreeningModal: React.FC<ScreeningModalProps> = ({
     try {
       const updates = {
         screening_schedule: schedule || null,
-        screening_score_btq: scoreBtq,
         screening_score_hmi: scoreHmi,
-        screening_score_kebangsaan: scoreKebangsaan,
+        screening_score_ptkp: scorePtkp,
+        screening_score_btq: scoreBtq,
+        screening_score_kmo: scoreKmo,
+        screening_score_stadium_general: scoreStadiumGeneral,
         screening_result: result,
         screening_notes: notes || null,
         status:
@@ -130,57 +134,101 @@ export const ScreeningModal: React.FC<ScreeningModalProps> = ({
             />
           </div>
 
-          {/* 3 Nilai Screening */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#10231C] block">
-                Nilai BTQ (Al-Qur'an)
-              </label>
-              <select
-                value={scoreBtq}
-                onChange={(e) => setScoreBtq(e.target.value)}
-                className="w-full rounded-xl border border-[#DCE8E2] bg-white px-2.5 py-2 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
-              >
-                {scoreGrades.map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
-            </div>
+          {/* 5 Nilai Materi Screening */}
+          <div className="space-y-2">
+            <span className="text-xs font-bold text-[#10231C] block">
+              Penilaian 5 Materi Screening LK-I:
+            </span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+              {/* 1. Ke-HMI-an */}
+              <div className="rounded-xl border border-[#DCE8E2] bg-[#F9FBFA] p-2.5 space-y-1">
+                <label className="text-[11px] font-bold text-[#006144] block">
+                  1. Nilai Ke-HMI-an
+                </label>
+                <select
+                  value={scoreHmi}
+                  onChange={(e) => setScoreHmi(e.target.value)}
+                  className="w-full rounded-lg border border-[#DCE8E2] bg-white px-2 py-1.5 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
+                >
+                  {scoreGrades.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#10231C] block">
-                Nilai Ke-HMI-an
-              </label>
-              <select
-                value={scoreHmi}
-                onChange={(e) => setScoreHmi(e.target.value)}
-                className="w-full rounded-xl border border-[#DCE8E2] bg-white px-2.5 py-2 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
-              >
-                {scoreGrades.map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
-            </div>
+              {/* 2. PTKP */}
+              <div className="rounded-xl border border-[#DCE8E2] bg-[#F9FBFA] p-2.5 space-y-1">
+                <label className="text-[11px] font-bold text-[#006144] block">
+                  2. Nilai PTKP
+                </label>
+                <select
+                  value={scorePtkp}
+                  onChange={(e) => setScorePtkp(e.target.value)}
+                  className="w-full rounded-lg border border-[#DCE8E2] bg-white px-2 py-1.5 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
+                >
+                  {scoreGrades.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="space-y-1">
-              <label className="text-[11px] font-bold text-[#10231C] block">
-                Nilai Kebangsaan
-              </label>
-              <select
-                value={scoreKebangsaan}
-                onChange={(e) => setScoreKebangsaan(e.target.value)}
-                className="w-full rounded-xl border border-[#DCE8E2] bg-white px-2.5 py-2 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
-              >
-                {scoreGrades.map((g) => (
-                  <option key={g} value={g}>
-                    {g}
-                  </option>
-                ))}
-              </select>
+              {/* 3. BTQ */}
+              <div className="rounded-xl border border-[#DCE8E2] bg-[#F9FBFA] p-2.5 space-y-1">
+                <label className="text-[11px] font-bold text-[#006144] block">
+                  3. Nilai BTQ (Al-Qur'an)
+                </label>
+                <select
+                  value={scoreBtq}
+                  onChange={(e) => setScoreBtq(e.target.value)}
+                  className="w-full rounded-lg border border-[#DCE8E2] bg-white px-2 py-1.5 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
+                >
+                  {scoreGrades.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 4. KMO */}
+              <div className="rounded-xl border border-[#DCE8E2] bg-[#F9FBFA] p-2.5 space-y-1">
+                <label className="text-[11px] font-bold text-[#006144] block">
+                  4. Nilai KMO
+                </label>
+                <select
+                  value={scoreKmo}
+                  onChange={(e) => setScoreKmo(e.target.value)}
+                  className="w-full rounded-lg border border-[#DCE8E2] bg-white px-2 py-1.5 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
+                >
+                  {scoreGrades.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* 5. Stadium General */}
+              <div className="rounded-xl border border-[#DCE8E2] bg-[#F9FBFA] p-2.5 space-y-1 sm:col-span-2 lg:col-span-1">
+                <label className="text-[11px] font-bold text-[#006144] block">
+                  5. Nilai Stadium General
+                </label>
+                <select
+                  value={scoreStadiumGeneral}
+                  onChange={(e) => setScoreStadiumGeneral(e.target.value)}
+                  className="w-full rounded-lg border border-[#DCE8E2] bg-white px-2 py-1.5 text-xs text-[#10231C] outline-none focus:border-[#006B3F]"
+                >
+                  {scoreGrades.map((g) => (
+                    <option key={g} value={g}>
+                      {g}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 

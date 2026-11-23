@@ -61,8 +61,11 @@ export async function GET(req: Request) {
       payment_status: doc.paymentStatus || "Belum Dicek",
       screening_schedule: doc.screeningSchedule || "",
       screening_result: doc.screeningResult || "",
-      screening_score_btq: doc.screeningScoreBtq || "",
       screening_score_hmi: doc.screeningScoreHmi || "",
+      screening_score_ptkp: doc.screeningScorePtkp || "",
+      screening_score_btq: doc.screeningScoreBtq || "",
+      screening_score_kmo: doc.screeningScoreKmo || "",
+      screening_score_stadium_general: doc.screeningScoreStadiumGeneral || "",
       screening_score_kebangsaan: doc.screeningScoreKebangsaan || "",
       screening_notes: doc.screeningNotes || "",
       admin_notes: doc.adminNote || "",
@@ -117,8 +120,11 @@ export async function PATCH(req: Request) {
     if (updates.admin_notes !== undefined) payloadUpdates.adminNote = updates.admin_notes;
     if (updates.screening_schedule !== undefined) payloadUpdates.screeningSchedule = updates.screening_schedule;
     if (updates.screening_result !== undefined) payloadUpdates.screeningResult = updates.screening_result;
-    if (updates.screening_score_btq !== undefined) payloadUpdates.screeningScoreBtq = updates.screening_score_btq;
     if (updates.screening_score_hmi !== undefined) payloadUpdates.screeningScoreHmi = updates.screening_score_hmi;
+    if (updates.screening_score_ptkp !== undefined) payloadUpdates.screeningScorePtkp = updates.screening_score_ptkp;
+    if (updates.screening_score_btq !== undefined) payloadUpdates.screeningScoreBtq = updates.screening_score_btq;
+    if (updates.screening_score_kmo !== undefined) payloadUpdates.screeningScoreKmo = updates.screening_score_kmo;
+    if (updates.screening_score_stadium_general !== undefined) payloadUpdates.screeningScoreStadiumGeneral = updates.screening_score_stadium_general;
     if (updates.screening_score_kebangsaan !== undefined) payloadUpdates.screeningScoreKebangsaan = updates.screening_score_kebangsaan;
     if (updates.screening_notes !== undefined) payloadUpdates.screeningNotes = updates.screening_notes;
 
@@ -164,13 +170,25 @@ export async function PATCH(req: Request) {
           setClauses.push("screening_result = ?");
           setValues.push(updates.screening_result);
         }
+        if (updates.screening_score_hmi !== undefined) {
+          setClauses.push("screening_score_hmi = ?");
+          setValues.push(updates.screening_score_hmi);
+        }
+        if (updates.screening_score_ptkp !== undefined) {
+          setClauses.push("screening_score_ptkp = ?");
+          setValues.push(updates.screening_score_ptkp);
+        }
         if (updates.screening_score_btq !== undefined) {
           setClauses.push("screening_score_btq = ?");
           setValues.push(updates.screening_score_btq);
         }
-        if (updates.screening_score_hmi !== undefined) {
-          setClauses.push("screening_score_hmi = ?");
-          setValues.push(updates.screening_score_hmi);
+        if (updates.screening_score_kmo !== undefined) {
+          setClauses.push("screening_score_kmo = ?");
+          setValues.push(updates.screening_score_kmo);
+        }
+        if (updates.screening_score_stadium_general !== undefined) {
+          setClauses.push("screening_score_stadium_general = ?");
+          setValues.push(updates.screening_score_stadium_general);
         }
         if (updates.screening_score_kebangsaan !== undefined) {
           setClauses.push("screening_score_kebangsaan = ?");

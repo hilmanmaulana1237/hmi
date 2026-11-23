@@ -314,9 +314,11 @@ export const MonitorDashboard: React.FC<MonitorDashboardProps> = ({
       "Pas Foto URL",
       "Bukti Transfer URL",
       "Jadwal Screening",
-      "Nilai BTQ",
       "Nilai Ke-HMI-an",
-      "Nilai Kebangsaan",
+      "Nilai PTKP",
+      "Nilai BTQ",
+      "Nilai KMO",
+      "Nilai Stadium General",
       "Hasil Screening",
       "Catatan Screening",
       "Catatan Panitia",
@@ -346,9 +348,11 @@ export const MonitorDashboard: React.FC<MonitorDashboardProps> = ({
       escape(r.photo_url),
       escape(r.payment_proof_url),
       escape(r.screening_schedule),
-      escape(r.screening_score_btq),
       escape(r.screening_score_hmi),
-      escape(r.screening_score_kebangsaan),
+      escape(r.screening_score_ptkp),
+      escape(r.screening_score_btq),
+      escape(r.screening_score_kmo),
+      escape(r.screening_score_stadium_general),
       escape(r.screening_result),
       escape(r.screening_notes),
       escape(r.admin_notes),
@@ -1412,6 +1416,67 @@ export const MonitorDashboard: React.FC<MonitorDashboardProps> = ({
                   )}
                 </div>
               </div>
+
+              {/* Hasil Penilaian Screening (5 Materi) */}
+              {(selectedCandidate.screening_score_hmi ||
+                selectedCandidate.screening_score_ptkp ||
+                selectedCandidate.screening_score_btq ||
+                selectedCandidate.screening_score_kmo ||
+                selectedCandidate.screening_score_stadium_general ||
+                selectedCandidate.screening_result) && (
+                <div className="sm:col-span-2 rounded-xl border border-[#BCD7CA] bg-[#F0FDF4] p-3.5 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-[#006144] flex items-center gap-1.5">
+                      <Award className="h-4 w-4" />
+                      <span>Hasil Penilaian Screening:</span>
+                    </span>
+                    {selectedCandidate.screening_result && (
+                      <span className="rounded bg-[#006144] px-2.5 py-0.5 text-[10px] font-black text-white">
+                        {selectedCandidate.screening_result}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-center text-xs">
+                    <div className="rounded-lg bg-white p-2 border border-[#DCE8E2]">
+                      <span className="text-[10px] text-[#4B6259] block">1. Ke-HMI-an</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144]">
+                        {selectedCandidate.screening_score_hmi || "-"}
+                      </span>
+                    </div>
+                    <div className="rounded-lg bg-white p-2 border border-[#DCE8E2]">
+                      <span className="text-[10px] text-[#4B6259] block">2. PTKP</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144]">
+                        {selectedCandidate.screening_score_ptkp || "-"}
+                      </span>
+                    </div>
+                    <div className="rounded-lg bg-white p-2 border border-[#DCE8E2]">
+                      <span className="text-[10px] text-[#4B6259] block">3. BTQ</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144]">
+                        {selectedCandidate.screening_score_btq || "-"}
+                      </span>
+                    </div>
+                    <div className="rounded-lg bg-white p-2 border border-[#DCE8E2]">
+                      <span className="text-[10px] text-[#4B6259] block">4. KMO</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144]">
+                        {selectedCandidate.screening_score_kmo || "-"}
+                      </span>
+                    </div>
+                    <div className="rounded-lg bg-white p-2 border border-[#DCE8E2] col-span-2 sm:col-span-1">
+                      <span className="text-[10px] text-[#4B6259] block">5. Stadium General</span>
+                      <span className="font-black text-xs sm:text-sm text-[#006144]">
+                        {selectedCandidate.screening_score_stadium_general || "-"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {selectedCandidate.screening_notes && (
+                    <p className="text-[11px] text-[#2D4A3E] pt-1">
+                      <strong>Catatan Evaluator:</strong> {selectedCandidate.screening_notes}
+                    </p>
+                  )}
+                </div>
+              )}
 
               {/* Catatan Panitia */}
               <div className="sm:col-span-2 space-y-2">
