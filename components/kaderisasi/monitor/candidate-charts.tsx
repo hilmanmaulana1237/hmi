@@ -8,19 +8,51 @@ interface CandidateChartsProps {
   registrations: any[];
 }
 
+export function normalizeMajor(rawMajor?: string | null): string {
+  if (!rawMajor) return "Lainnya / Luar Saintek";
+  const trimmed = rawMajor.trim().toLowerCase();
+
+  // If explicitly designated as Luar Saintek / Lainnya or outside Saintek
+  if (
+    trimmed.startsWith("lainnya") ||
+    trimmed.includes("luar saintek") ||
+    trimmed.includes("hukum") ||
+    trimmed.includes("manajemen") ||
+    trimmed.includes("tarbiyah") ||
+    trimmed.includes("ushuluddin") ||
+    trimmed.includes("dakwah") ||
+    trimmed.includes("adab") ||
+    trimmed.includes("syariah") ||
+    trimmed.includes("ekonomi")
+  ) {
+    return "Lainnya / Luar Saintek";
+  }
+
+  if (trimmed.includes("informatika")) return "Teknik Informatika";
+  if (trimmed.includes("elektro")) return "Teknik Elektro";
+  if (trimmed.includes("biologi")) return "Biologi";
+  if (trimmed.includes("kimia")) return "Kimia";
+  if (trimmed.includes("fisika")) return "Fisika";
+  if (trimmed.includes("matematika")) return "Matematika";
+  if (trimmed.includes("agroteknologi") || trimmed.includes("agro")) return "Agroteknologi";
+
+  return "Lainnya / Luar Saintek";
+}
+
 export const CandidateCharts: React.FC<CandidateChartsProps> = ({ registrations }) => {
   if (registrations.length === 0) return null;
 
   // 1. Major counts
   const majorCounts: Record<string, number> = {};
   registrations.forEach((r) => {
-    const major = r.study_program || r.studyProgram || "Lainnya";
+    const raw = r.study_program || r.studyProgram || "";
+    const major = normalizeMajor(raw);
     majorCounts[major] = (majorCounts[major] || 0) + 1;
   });
 
   const sortedMajors = Object.entries(majorCounts)
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 7);
+    .filter(([, count]) => count > 0)
+    .sort((a, b) => b[1] - a[1]);
 
   const maxMajorCount = Math.max(...Object.values(majorCounts), 1);
 
@@ -58,11 +90,19 @@ export const CandidateCharts: React.FC<CandidateChartsProps> = ({ registrations 
 
         <div className="mt-3.5 space-y-2.5">
           {sortedMajors.map(([major, count]) => {
-            const percent = Math.round((count / maxMajorCount) * 100);
+            const percent = Math.max(
+              Math.round((count / maxMajorCount) * 100),
+              count > 0 ? 3 : 0
+            );
             return (
               <div key={major} className="space-y-1">
                 <div className="flex justify-between items-center text-[11px] gap-2">
-                  <span className="font-semibold text-[#10231C] truncate max-w-[130px] xs:max-w-[180px]">{major}</span>
+                  <span
+                    className="font-semibold text-[#10231C] truncate max-w-[170px] xs:max-w-[210px]"
+                    title={major}
+                  >
+                    {major}
+                  </span>
                   <span className="font-bold text-[#006144] shrink-0">{count} calon</span>
                 </div>
                 <div className="h-2 rounded-full bg-[#EAF2EE] overflow-hidden">
